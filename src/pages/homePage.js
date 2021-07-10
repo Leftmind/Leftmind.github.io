@@ -29,10 +29,12 @@ import portalenHand from '../images/portalenHand.png'
 
 import Company from '../components/company';
 import Profile from '../components/profile';
+import PengaKollen from '../components/pengakollen'
 import { firebase } from "../config/fbConfig";
 import { useState, useEffect } from 'react';
 import { useAuth } from '../config/authProvider';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
 
 
 
@@ -215,7 +217,7 @@ function ResponsiveDrawer(props) {
                     <div>
                         {page == 'Min Profil' ? <Profile usedUser={usedUser}/> : null}
                         {page == 'Mitt Företag' ? <Company usedUser={usedUser}/> : null}
-                        {page == 'Pengakollen' ? <Company usedUser={usedUser}/> : null}
+                        {page == 'Pengakollen' ? <PengaKollen usedUser={usedUser}/> : null}
                     </div>
                 </main>
             </div>
