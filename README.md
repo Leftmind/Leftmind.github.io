@@ -1,70 +1,65 @@
-# Getting Started with Create React App
+# Disgusting react app
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Just make this abomination work on mobile and web
 
-## Available Scripts
+## About the app
+routes are
+-login
+-signup
+-homepage
 
-In the project directory, you can run:
+The homepage handles absolutely everything based on a state that decides what to render (genius move). Every firebase command is written directly in the view (or in any subcomponents related to the main view)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## TODO
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
+### Pengakollen - View
+Vidar working on it
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Mina mål / "Utmaning" - View
+the same as the the previous version, there is updated points for this
+https://xd.adobe.com/view/dae3039d-910f-465c-a71f-7c2c503e0fb2-8fb0/screen/a90f055b-d8f6-49a1-9e84-14e4863ade81?fbclid=IwAR3FwNGSdmTIuq-iRZl76fqYNyqFpiPWmJVB3vowotoGX_LxBKw1TNobQgM&fullscreen
 
-### `npm run build`
+should be easy enought with react cards. Every card should give X amount of points to the company aswell. Does absolutely not need to look the same
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Profile/company page - Component
+Make the profile photo work for both profile and company page.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Make sure the company points work
+1
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Cosmetics - Component
 
-### `npm run eject`
+* Make a banner on all the pages. This should be all the cosmetics we need to make it look decent.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Skärmavbild 2021-07-08 kl. 20.31.55<img width="777" alt="Skärmavbild 2021-07-08 kl  20 31 55" src="https://user-images.githubusercontent.com/37019968/124974030-96e98000-e02c-11eb-85e0-0f96fb62314e.png">
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+(^ like that one in the previous version)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* Possibly create more cosmetics that make the overall app look better
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+ICONS https://drive.google.com/drive/folders/1DVv2yL7onEXP2wx5aFkOeR9RVxK7en0-
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Pointsystem from robert, they want some kinda "star" thing, when you have x points you get x stars. We can ignore points for changing profile pic if it's too annoying.
 
-### Code Splitting
+Poängsystem
+1 poäng var 50:e intjänad krona
+10 poäng - byta profilbild (gäller en gång)
+10 poäng - byta företagsbild (gäller en gång)
+10 poäng - uppnått delmål (alla personliga mål räknas som ett delmål)
+20 poäng - uppnått huvudmål (endast företagsmål, poängsättningen kommer att variera)
+30 poäng - slutföra bootcamp (när användaren checka av samtliga segment)
+1 poäng - 1 stjärna
+50 - 2 stjärnor
+150 - 3 stjärnor
+300 - 4 stjärnor
+500 - 5 stjärnor
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Good to have
+A page that just lists all companies with the names and points
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
