@@ -1,5 +1,5 @@
 // Material UI components
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,8 +12,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { firebase } from "../config/fbConfig";
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
 
 
 const styles = (theme) => ({
@@ -45,18 +44,18 @@ const styles = (theme) => ({
 });
 
 function Login(props) {
-
+  const [loggedIn, setLoggedIn] = useState(false);
 	const [state, setState] = useState({
 		email: '',
 		password: '',
 		errors: [],
 		loading: false
-	})
+  });
 
-	const [loggedIn, setLoggedIn] = useState(false);
+  let history = useHistory();
+
 
 	const handleChange = (event) => {
-
 		const { name, value } = event.target;
 		setState(prevState => ({
 			...prevState,
@@ -75,9 +74,8 @@ function Login(props) {
 
 		firebase.auth().signInWithEmailAndPassword(userData.email, userData.password)
 			.then((userCredential) => {
-				// Signed in
 				var user = userCredential.user;
-				console.log(user, ' användare')
+				console.log(user, 'användare')
 				setLoggedIn(true);
 			})
 			.catch((error) => {
@@ -85,14 +83,23 @@ function Login(props) {
 				var errorMessage = error.message;
 				console.log(errorCode, errorMessage, 'error')
 			});
+};
 
+  useEffect(() => {
+    if (loggedIn) {
+      history.push('/')
+    }
+  }, [loggedIn, history]);
 
-
-	};
-	if (loggedIn) return <Redirect to="/" />
-	else
 		return (
-			<Container component="main" maxWidth="xs">
+      <Grid
+        container
+        spacing={0}
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh' }}
+      >
 				<CssBaseline />
 				<div >
 					<Avatar>
@@ -144,7 +151,7 @@ function Login(props) {
 						</Grid>
 					</form>
 				</div>
-			</Container>
+      </Grid>
 		);
 }
 

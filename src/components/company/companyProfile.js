@@ -31,9 +31,6 @@ const AccountProfileDetails = ({ usedUser }) => {
         instagram: '-',
         website: '-'
     });
-
-
-
     const [userInfo, setUserInfo] = useState("");
     const { user, loading, logout } = useAuth();
 

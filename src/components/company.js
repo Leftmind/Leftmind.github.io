@@ -11,10 +11,6 @@ import {
   import { firebase } from "../config/fbConfig";
   import { useAuth } from '../config/authProvider';
 
-
-
-
-
 //   import LatestOrders from 'src/components/dashboard//LatestOrders';
 //   import LatestProducts from 'src/components/dashboard//LatestProducts';
 //   import Sales from 'src/components/dashboard//Sales';
@@ -23,12 +19,8 @@ import {
 //   import TotalProfit from 'src/components/dashboard//TotalProfit';
 //   import TrafficByDevice from 'src/components/dashboard//TrafficByDevice';
 
-
-  
   function Company ({usedUser}) {
-
     const hasCompany = 'companies' in usedUser;
-    console.log(hasCompany, ' has it?')
     const [joinOrCreate, setJoinOrCrate] = useState(false);
     const { user, loading, logout } = useAuth();
 
@@ -39,13 +31,12 @@ import {
         else setJoinOrCrate({create : whatPage.create, companyName : whatPage.companyName})
     }
 
-    useEffect(async () => {
-
+    useEffect(() => {
         if(joinOrCreate){
             if(!joinOrCreate.create && joinOrCreate.companyName){
 
-                console.log(joinOrCreate, ' before goin in')
-                await firebase.firestore()
+              try {
+                firebase.firestore()
                 .collection('companies')
                 .where('companyName', '==', joinOrCreate.companyName)
                 .get()
@@ -73,15 +64,16 @@ import {
                 }
 
                 console.log('success, do alert here')
-            }).catch( err => {
-                console.log(err,'fb error')
             })
+              } catch (error) {
+                console.log(error,'fb error')
+              }
+
             }
         }
-    }, [joinOrCreate]);
+    }, [joinOrCreate, usedUser.firstName, user.uid, usedUser.lastName]);
 
     return(
-    <>
       <Box
         sx={{
           backgroundColor: 'background.default',
@@ -94,7 +86,7 @@ import {
           container
           spacing={3}
         >
-        {!hasCompany ?     
+        {!hasCompany &&
           <Grid
             item
             lg={3}
@@ -104,9 +96,8 @@ import {
           >
             <JoinCompany join={false} onChange={handleChange}/>
           </Grid>
-          : null
         }
-        {!hasCompany ? 
+        {!hasCompany &&
           <Grid
             item
             lg={8}
@@ -115,9 +106,9 @@ import {
             xs={12}
           >
             <CreateCompany />
-          </Grid> : null
+          </Grid>
         }
-          {hasCompany ? 
+          {hasCompany &&
                 <Container maxWidth="lg">
                 <Grid
                     container
@@ -132,10 +123,9 @@ import {
                         <CompanyProfile usedUser={usedUser} />
                     </Grid>
                 </Grid>
-            </Container> :
-            null
+            </Container>
         }
-        {hasCompany ? 
+        {hasCompany &&
                     <Grid
                     item
                     lg={8}
@@ -144,13 +134,12 @@ import {
                     xs={12}
                   >
                     <AllMembers usedUser={usedUser}/>
-                  </Grid> : null
+                  </Grid>
         }
           </Grid>
         </Container>
       </Box>
-    </>
     )
   };
-  
+
   export default Company;

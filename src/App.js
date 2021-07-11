@@ -4,13 +4,9 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import login from './pages/login';
 import signup from './pages/signup';
-import home from './pages/home';
 import homePage from './pages/homePage';
 // import { AuthProvider } from "./context/AuthContext";
 import { AuthProvider } from "./config/authProvider";
-
-
-
 
 const theme = createMuiTheme({
 	palette: {

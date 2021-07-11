@@ -16,7 +16,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/avatar';
-
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import BusinessIcon from '@material-ui/icons/Business';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
@@ -25,10 +24,9 @@ import AssessmentIcon from '@material-ui/icons/Assessment';
 import planetBackground from '../images/bakgrund.jpg'
 import Banner from '../components/ContainerBanner'
 import portalenHand from '../images/portalenHand.png'
-
-
 import Company from '../components/company';
 import Profile from '../components/profile';
+import Utmaning from '../components/utmaning';
 import { firebase } from "../config/fbConfig";
 import { useState, useEffect } from 'react';
 import { useAuth } from '../config/authProvider';
@@ -79,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         height: 110,
-        width: 100,
+        width: 110,
         flexShrink: 0,
         flexGrow: 0,
         marginTop: 20
@@ -93,25 +91,28 @@ function ResponsiveDrawer(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [page, setPage] = useState('Min Profil');
     const { user, loading, logout } = useAuth();
-    const [usedUser, setUserUser] = useState(false);
+    const [usedUser, setUserUser] = useState({});
 
-    useEffect(async () => {
+    useEffect(() => {
         if(user){
         const userDocRef = firebase.firestore().collection('users').doc(user.uid);
-        const dataExists = await userDocRef.get();
-        console.log(dataExists.data(), 'user data');
-        setUserUser(dataExists.data());
+        userDocRef.get().then((doc) => {
+          if (doc.exists) {
+              setUserUser(doc.data());
+          } else {
+              console.log("No such document!");
+          }
+        }).catch ((error) => {
+        console.log("******\nDATA\n******: ResponsiveDrawer -> error", error)
+        })
         }
     }, [user]);
 
     if (loading) return null;
     if (!user) return <Redirect to="/login" />
 
+    const changeViewFunction = (whatPage) => setPage(whatPage);
 
-    const changeViewFunction = (whatPage) => {
-        console.log(whatPage, ' this is page')
-        setPage(whatPage);
-    }
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -132,7 +133,7 @@ function ResponsiveDrawer(props) {
             </List>
             <Divider />
             <List>
-                {['Min Profil', 'Mitt Företag', 'Pengakollen', 'Mina mål', 'Business bootcamp'].map((text, index) => (
+                {['Min Profil', 'Mitt Företag', 'Pengakollen', 'Utmaning', 'Business bootcamp'].map((text, index) => (
                     <ListItem button key={text} onClick={() => changeViewFunction(text)}>
                         <ListItemIcon>{icons[index]}</ListItemIcon>
                         <ListItemText primary={text} />
@@ -147,13 +148,23 @@ function ResponsiveDrawer(props) {
         </div>
     );
 
+    const pageToRender = () => {
+      switch(page) {
+        case 'Min Profil':
+          return <Profile usedUser={usedUser}/>
+        case 'Mitt Företag':
+        case 'Pengakollen':
+          return <Company usedUser={usedUser}/>
+        case 'Utmaning':
+          return <Utmaning usedUser={usedUser}/>
+        default:
+          return null;
+      }
+    }
+
     const container = window !== undefined ? () => window().document.body : undefined;
-    console.log(user, ' hello?')
-    if (!user) return <Redirect to="/login" />
-    if (!usedUser) return null
-    else
         return (
-            <div className={classes.root}         
+            <div className={classes.root}
               style={{
                 backgroundImage: `url(${planetBackground})`,
                 backgroundPosition: 'center',
@@ -213,9 +224,13 @@ function ResponsiveDrawer(props) {
                 <main className={classes.content}>
                     <div className={classes.toolbar} />
                     <div>
-                        {page == 'Min Profil' ? <Profile usedUser={usedUser}/> : null}
-                        {page == 'Mitt Företag' ? <Company usedUser={usedUser}/> : null}
-                        {page == 'Pengakollen' ? <Company usedUser={usedUser}/> : null}
+                      {
+                        Object.keys(usedUser).length > 0 ? (
+                          pageToRender()
+                        ) : (
+                          null
+                        )
+                      }
                     </div>
                 </main>
             </div>

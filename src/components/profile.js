@@ -39,19 +39,9 @@ const Profile = ({ usedUser }) => (
                         md={12}
                         xs={12}
                     >
-                     {/* <Card
-                     style={{ backgroundColor : '#96CB3C'}}
-                     >
-                        <img src={portalenHand} alt="Logo"
-                        style={{
-                            height: 100,
-                            //position: 'absolute',
-                        }}
-                        />
-                     </Card>    */}
                     </Grid>
                 </Grid>
-                
+
             </Container>
 
             <Container maxWidth="lg">

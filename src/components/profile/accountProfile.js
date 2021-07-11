@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
     Box,
     Button,
@@ -17,19 +17,14 @@ import { useAuth } from '../../config/authProvider';
 import { firebase } from "../../config/fbConfig";
 import { Alert as MuiAlert } from '@material-ui/lab';
 import Snackbar from '@material-ui/core/Snackbar';
-
-
-
-
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const AccountProfileDetails = ({ usedUser }) => {
-    const [values, setValues] = useState("");
-    const [open, setOpen] = useState(false);
-
-
-    const [userInfo, setUserInfo] = useState("");
-    const { user, loading, logout } = useAuth();
+  const [values, setValues] = useState("");
+  const [open, setOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState({...usedUser});
+  console.log("******\nDATA\n******: AccountProfileDetails -> userInfo", userInfo)
+  const { user, loading, logout } = useAuth();
 
     function Alert(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -62,12 +57,6 @@ const AccountProfileDetails = ({ usedUser }) => {
     };
 
 
-    useEffect(async () => {
-        setUserInfo(usedUser)
-        console.log(userInfo, 'från account profile page')
-    }, []);
-
-
     const handleChange = (event) => {
         setUserInfo({
             ...userInfo,
@@ -80,7 +69,6 @@ const AccountProfileDetails = ({ usedUser }) => {
             autoComplete="off"
             noValidate
         >
-
             <Card>
                 <Grid
                     container
@@ -130,7 +118,7 @@ const AccountProfileDetails = ({ usedUser }) => {
                     title="Profil"
                 />
                 <Divider />
-                <CardContent>
+                  <CardContent>
                     <Grid
                         container
                         spacing={3}
