@@ -33,10 +33,6 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../config/authProvider';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
-
-
-
-
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
@@ -155,8 +151,9 @@ function ResponsiveDrawer(props) {
         case 'Min Profil':
           return <Profile usedUser={usedUser}/>
         case 'Mitt Företag':
-        case 'Pengakollen':
           return <Company usedUser={usedUser}/>
+        case 'Pengakollen':
+          return <PengaKollen usedUser={usedUser}/>
         case 'Utmaning':
           return <Utmaning usedUser={usedUser}/>
         default:
