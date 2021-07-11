@@ -27,10 +27,12 @@ import portalenHand from '../images/portalenHand.png'
 import Company from '../components/company';
 import Profile from '../components/profile';
 import Utmaning from '../components/utmaning';
+import PengaKollen from '../components/pengakollen'
 import { firebase } from "../config/fbConfig";
 import { useState, useEffect } from 'react';
 import { useAuth } from '../config/authProvider';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
 
 
 
