@@ -19,7 +19,12 @@ const BannerTitle = s.h1({
     margin: 0,
   });
 
-const Profile = ({ usedUser }) => (
+const Profile = ({ usedUser }) => {
+
+    console.log(usedUser, ' this is the user that is being used')
+
+
+    return (
     <div>
         <Box
             sx={{
@@ -71,6 +76,7 @@ const Profile = ({ usedUser }) => (
             </Container>
         </Box>
     </div>
-);
+    )
+};
 
 export default Profile;

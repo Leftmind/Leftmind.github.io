@@ -107,7 +107,9 @@ function CreateCompany(props) {
             instagram: newUserData.instagram,
             website: newUserData.website,
             companyId: firestoreId,
-            members: [{ admin: true, firstName: usedUser.firstName, lastName: usedUser.lastName, userId: user.uid, pending: false}]
+            members: [{ admin: true, firstName: usedUser.firstName, lastName: usedUser.lastName, userId: user.uid, pending: false}],
+            expenses: [{}],
+            profits: [{}]
         }).then( () => {
             addCompanyToAccount(newUserData, firestoreId);
         }).catch( error => {
