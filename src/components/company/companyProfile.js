@@ -9,9 +9,7 @@ import {
     Grid,
     TextField,
     Avatar,
-    CardActions,
     Typography,
-    InputLabel
 } from '@material-ui/core';
 import { useAuth } from '../../config/authProvider';
 import { firebase } from "../../config/fbConfig";
@@ -60,18 +58,14 @@ const AccountProfileDetails = ({ usedUser }) => {
     };
 
 
-    useEffect(async () => {
+    useEffect(() => {
         setUserInfo(usedUser)
-        console.log(userInfo, 'från account profile page')
-
         const userDocRef = firebase.firestore().collection('companies').doc(usedUser.companies[0].companyId);
-        const dataExists = await userDocRef.get();
-        setCompany(dataExists.data());
-
-        console.log(company);
-        console.log(dataExists.data(), 'user data');
-
-    }, []);
+        (async () => {
+          const dataExists = await userDocRef.get();
+          setCompany(dataExists.data());
+        })();
+    }, [usedUser]);
 
 
     const handleChange = (event) => {

@@ -1,22 +1,13 @@
-import React from 'react';
-import { Card, CardContent, Typography, Grid, CardMedia, Box } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, Typography, Grid, CardMedia, Box, CardActionArea } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import firstCustomerImg from '../assets/badge_first_customer.png';
 import twoKpoints from '../assets/badge_2000_points.png';
 import cooperation from '../assets/badge_cooperation.png';
 import firstHundredKronor from '../assets/badge_first_hundred_kronor.png';
 import StarBorder from '@material-ui/icons/StarBorder';
-
-const cardData = [
-  { text: 'min första kund' , img: firstCustomerImg},
-  { text: 'första hundralappen', img: firstHundredKronor },
-  { text: 'samarbets med andra' , img: cooperation},
-  { text: 'tjäna 2000kr', img: twoKpoints},
-  { text: 'företagslogga', img: null},
-  { text: 'instagramkonto', img: null},
-  { text: 'facebookkonto', img: null},
-  { text: 'gör en annons', img: null},
-];
+import Star from '@material-ui/icons/Star';
+import { firebase } from "../config/fbConfig";
 
 const useStyles = makeStyles({
   root: {
@@ -48,7 +39,9 @@ const useStyles = makeStyles({
     height: '50%'
   },
   gridCard: {
-    height: '100%'
+    height: '100%',
+    transition: "transform 0.15s ease-in-out",
+    "&:hover": { transform: "scale3d(1.05, 1.05, 1)" },
   },
   cardContentContainer: {
     flexDirection: 'column',
@@ -71,10 +64,59 @@ const useStyles = makeStyles({
     paddingTop: 20,
     paddingBottom: 20,
   },
+  filledStar: {
+    fill:"#ede21b",
+  }
 });
 
 function Utmaning({ usedUser }) {
   const classes = useStyles();
+  const [company, setCompany] = useState({});
+  const [cardData, setCardData] = useState([
+    { text: 'min första kund' , img: firstCustomerImg, completed: false},
+    { text: 'första hundralappen', img: firstHundredKronor , completed: false},
+    { text: 'samarbets med andra' , img: cooperation, completed: false},
+    { text: 'tjäna 2000kr', img: twoKpoints, completed: false},
+    { text: 'företagslogga', img: null, completed: false},
+    { text: 'instagramkonto', img: null, completed: false},
+    { text: 'facebookkonto', img: null, completed: false},
+    { text: 'gör en annons', img: null, completed: false},
+  ])
+
+  const companyHasEarned2k = (profitsArr) => {
+    const totalEarnings = profitsArr.reduce((acc, el) => {
+      acc += el.transactionAmount
+      return acc;
+    }, 0);
+
+    return totalEarnings >= 2000;
+  };
+
+  useEffect(() => {
+    const userDocRef = firebase.firestore().collection('companies').doc(usedUser.companies[0].companyId);
+    (async () => {
+      const dataExists = await userDocRef.get();
+      const companyData = dataExists.data();
+      setCompany(companyData);
+      setCardData(
+        [
+          { text: 'min första kund' , img: firstCustomerImg, completed: false},
+          { text: 'första hundralappen', img: firstHundredKronor , completed: false},
+          { text: 'samarbets med andra' , img: cooperation, completed: companyData.members.length > 0},
+          { text: 'tjäna 2000kr', img: twoKpoints, completed: companyHasEarned2k(companyData.profits)},
+          { text: 'företagslogga', img: null, completed: false},
+          { text: 'instagramkonto', img: null, completed: companyData.instagram !== ""},
+          { text: 'facebookkonto', img: null, completed: companyData.facebook !== ""},
+          { text: 'gör en annons', img: null, completed: false},
+        ]
+      )
+    })();
+}, [usedUser]);
+
+useEffect(() => {
+
+  console.log("******\nDATA\n******: Utmaning -> company", company)
+}, [company])
   return (
       <Card className={classes.root}>
           <CardContent className={classes.cardContent}>
@@ -91,10 +133,10 @@ function Utmaning({ usedUser }) {
                   </Typography>
               </Grid>
               {
-                cardData.map(({ text, img }) => {
+                cardData.map(({ text, img, completed }) => {
                   return (
                   <Grid item xs={12} sm={6} md={6} lg={3}>
-                    <Card className={classes.gridCard}>
+                    <CardActionArea className={classes.gridCard} elevation={2}>
                       <CardContent className={classes.cardContentContainer}>
                       { img &&
                       (<CardMedia
@@ -109,10 +151,10 @@ function Utmaning({ usedUser }) {
                         {text}
                         </Typography>
                         <Box className={classes.iconHolder}>
-                          <StarBorder fontSize="large" className={classes.starIcon}/>
+                          { completed ? <Star fontSize="large" className={classes.filledStar}/> : <StarBorder fontSize="large" />}
                         </Box>
                       </CardContent>
-                    </Card>
+                    </CardActionArea>
                   </Grid>
                   );
                 })
