@@ -208,11 +208,8 @@ const Utmaning = ({ usedUser }) => {
 
     const dataExists = await companyRef.get();
     const companyChallengesData = dataExists.data().challenges;
-    console.log("******\nDATA\n******: handleBannerClick -> companyChallengesData 111", companyChallengesData)
     const foundChallenge = companyChallengesData.find((el) => el.id === ind);
     foundChallenge.completed = true;
-
-    console.log("******\nDATA\n******: handleBannerClick -> companyChallengesData 222", companyChallengesData)
 
     await companyRef.set({
       challenges: companyChallengesData,
