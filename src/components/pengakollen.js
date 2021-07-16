@@ -13,6 +13,7 @@ import {
 import Expenses from './pengakollen/expenses'
 import ExpenseAmountMoney from './pengakollen/expenseAmountMoney'
 import { firebase } from "../config/fbConfig";
+import Banner from'./assets/banner'
 
 
 const states = [
@@ -77,6 +78,8 @@ const Pengakollen = ({usedUser}) => {
     return (
         <>
             <Card>
+            <Banner text={"Pengakollen"} />
+
                 <CardHeader
                     subheader="Att hålla koll på ekonomin är viktigt. Pengar in (intäkter) och pengar ut (utgifter) berättar om ditt företags resultat - det vill säga hur mycket vinst eller förlust ditt företag går. 
         ,,

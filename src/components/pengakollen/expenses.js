@@ -267,7 +267,7 @@ const Expenses = ({ usedUser, expense }) => {
                           {moment(date * 1000).format('YYYY-MM-DD')}
                         </TableCell>
                         <TableCell>
-                          <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} />
+                          <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} usedUser={usedUser} />
                         </TableCell>
                       </TableRow>
                     )
@@ -285,7 +285,7 @@ const Expenses = ({ usedUser, expense }) => {
                         {moment(order.createdAt).format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell>
-                        <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} />
+                        <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} usedUser={usedUser}/>
                       </TableCell>
                     </TableRow>
                   ))

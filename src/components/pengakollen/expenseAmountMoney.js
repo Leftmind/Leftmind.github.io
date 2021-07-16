@@ -90,8 +90,13 @@ const ExpenseAmountMoney = ({usedUser}) => {
     let expenses = 0;
     let profits = 0;
 
-    expenses = companyData.expenses.map(item => item.transactionAmount).reduce((prev, next) => +prev + +next);
-    profits = companyData.profits.map(item => item.transactionAmount).reduce((prev, next) => +prev + +next);
+
+    if(companyData.expenses.length > 1){
+      expenses = companyData.expenses.map(item => item.transactionAmount).reduce((prev, next) => +prev + +next);
+    }
+    if(companyData.profits.length > 1){
+      profits = companyData.profits.map(item => item.transactionAmount).reduce((prev, next) => +prev + +next);
+    } 
 
     console.log(profits, expenses)
     setCompanyExpense({expenses : expenses, profits: profits})
@@ -145,7 +150,7 @@ const ExpenseAmountMoney = ({usedUser}) => {
                 variant="h4"
               >
                 {companyExpense.profits}
-                Sek
+                Kr
               </Typography>
             </Box>
             <Box
@@ -166,7 +171,7 @@ const ExpenseAmountMoney = ({usedUser}) => {
                 variant="h4"
               >
                 {companyExpense.expenses}
-                Sek
+                Kr
               </Typography>
             </Box>
             <Box
@@ -187,7 +192,7 @@ const ExpenseAmountMoney = ({usedUser}) => {
                 variant="h4"
               >
                 {+companyExpense.profits - +companyExpense.expenses}
-                Sek
+                Kr
               </Typography>
             </Box>
         </Box>
