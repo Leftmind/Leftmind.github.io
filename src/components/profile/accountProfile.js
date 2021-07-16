@@ -18,6 +18,7 @@ import { firebase } from "../../config/fbConfig";
 import { Alert as MuiAlert } from '@material-ui/lab';
 import Snackbar from '@material-ui/core/Snackbar';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import Banner from '../assets/banner'
 
 const AccountProfileDetails = ({ usedUser }) => {
   const [values, setValues] = useState("");
@@ -70,6 +71,8 @@ const AccountProfileDetails = ({ usedUser }) => {
             noValidate
         >
             <Card>
+            <Banner text={"Min Profil"} />
+
                 <Grid
                     container
                     spacing={0}
@@ -135,6 +138,7 @@ const AccountProfileDetails = ({ usedUser }) => {
                                 onChange={handleChange}
                                 required
                                 value={userInfo.firstName}
+                                disabled
                                 variant="outlined"
                             >
                             </TextField>
@@ -151,6 +155,7 @@ const AccountProfileDetails = ({ usedUser }) => {
                                 onChange={handleChange}
                                 required
                                 value={userInfo.lastName}
+                                disabled
                                 variant="outlined"
                             >
                             </TextField>

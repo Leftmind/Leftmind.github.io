@@ -14,6 +14,7 @@ import {
 import { useAuth } from '../../config/authProvider';
 import { firebase } from "../../config/fbConfig";
 import { Alert as MuiAlert } from '@material-ui/lab';
+import Banner from '../assets/banner'
 import Snackbar from '@material-ui/core/Snackbar';
 
 
@@ -80,8 +81,9 @@ const AccountProfileDetails = ({ usedUser }) => {
             autoComplete="off"
             noValidate
         >
-
             <Card>
+            <Banner text={"Mitt Företag"} />
+
                 <Grid
                     container
                     spacing={0}

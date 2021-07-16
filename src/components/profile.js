@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import AccountProfileDetails from './profile/accountProfile';
 import planetBackground from '../images/bakgrund.jpg'
-import Banner from './ContainerBanner'
+import Banner from './assets/banner'
 import portalenHand from '../images/portalenHand.png'
 import s, { css } from 'styled-components';
 
@@ -34,6 +34,7 @@ const Profile = ({ usedUser }) => {
             }}
         >
             <Container maxWidth="lg">
+
                 <Grid
                     container
                     spacing={7}
@@ -50,6 +51,7 @@ const Profile = ({ usedUser }) => {
             </Container>
 
             <Container maxWidth="lg">
+                
                 <Grid
                     container
                     spacing={2}

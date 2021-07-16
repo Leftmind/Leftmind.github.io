@@ -32,13 +32,18 @@ import { firebase } from "../config/fbConfig";
 import { useState, useEffect } from 'react';
 import { useAuth } from '../config/authProvider';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import FramtidsPortalenLogo from '../assets/Logga-framtidsportalen.png'
+import FramtidsPortalenBanner from '../assets/framtidsportalen-logga_alt.png'
+import AllCompanies from '../components/allCompanies'
+
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const drawerWidth = 240;
 
 
-const icons = [<AccountBoxIcon />, <BusinessIcon />, <MonetizationOnIcon />, <AssignmentIcon />, <AssessmentIcon />];
+const icons = [<AccountBoxIcon />, <BusinessIcon />, <MonetizationOnIcon />, <AssignmentIcon />, <AssessmentIcon />, <ExitToAppIcon />];
 const allPages = ['profile', 'company', 'pengakollen', 'myGoals', 'bootcamp']
 
 const useStyles = makeStyles((theme) => ({
@@ -122,7 +127,7 @@ function ResponsiveDrawer(props) {
             <Divider />
             <List>
                 <center>
-                    <Avatar src={MailIcon} className={classes.avatar} />
+                    <Avatar src={FramtidsPortalenLogo} className={classes.avatar} />
                     <p>
                         {' '}
                         {usedUser.firstName} {usedUser.lastName}
@@ -131,14 +136,14 @@ function ResponsiveDrawer(props) {
             </List>
             <Divider />
             <List>
-                {['Min Profil', 'Mitt Företag', 'Pengakollen', 'Utmaning', 'Business bootcamp'].map((text, index) => (
+                {['Min Profil', 'Mitt Företag', 'Pengakollen', 'Utmaning', 'Business bootcamp', 'Alla Företag'].map((text, index) => (
                     <ListItem button key={text} onClick={() => changeViewFunction(text)}>
                         <ListItemIcon>{icons[index]}</ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
                 <ListItem button onClick={logout} >
-                    <ListItemIcon>{icons[1]}</ListItemIcon>
+                    <ListItemIcon>{icons[5]}</ListItemIcon>
                     <ListItemText primary="logga ut" />
                 </ListItem>
             </List>
@@ -156,6 +161,8 @@ function ResponsiveDrawer(props) {
           return <PengaKollen usedUser={usedUser}/>
         case 'Utmaning':
           return <Utmaning usedUser={usedUser}/>
+        case 'Alla Företag':
+            return <AllCompanies usedUser={usedUser}/>
         default:
           return null;
       }
@@ -169,8 +176,10 @@ function ResponsiveDrawer(props) {
                 backgroundPosition: 'center',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'repeat-y',
+                backgroundAttachment: "fixed",
+                minHeight: '100vh',
                 width: '100%',
-                height: '200vh'
+                height: '100%'
                 }}>
                 <CssBaseline />
                 <AppBar position="fixed" className={classes.appBar}>
@@ -184,10 +193,7 @@ function ResponsiveDrawer(props) {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <img src={portalenHand} style={{ height: 50, width: 50}}/>
-                        <Typography variant="h6" noWrap>
-                            Framtidsportalen
-                        </Typography>
+                        <img src={FramtidsPortalenBanner} style={{ height: 50}}/>
                     </Toolbar>
                 </AppBar>
                 <nav className={classes.drawer} aria-label="mailbox folders">

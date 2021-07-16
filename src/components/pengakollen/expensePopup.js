@@ -17,7 +17,7 @@ import {
     IconButton
   } from '@material-ui/core';
 
-export default function FormDialog({order, company, expenseOrProfit}) {
+export default function FormDialog({order, company, expenseOrProfit, usedUser}) {
 
   const [open, setOpen] = React.useState(false);
   const [openAlert, setOpenAlert] = React.useState(false);
@@ -25,6 +25,7 @@ export default function FormDialog({order, company, expenseOrProfit}) {
 
   const [state, setState] = useState({
     comment: '',
+    user: usedUser.firstName,
   });
 
   const handleText = (event) => {
@@ -40,7 +41,7 @@ export default function FormDialog({order, company, expenseOrProfit}) {
   };
 
   const handleClickOpenRemove = () => {
-    setOpenAlertRemove(true);
+    setOpenAlertRemove(false);
   };
 
   const handleClose = () => {
@@ -48,7 +49,7 @@ export default function FormDialog({order, company, expenseOrProfit}) {
   };
 
   const handleClick = () => {
-    setOpenAlert(!open);
+    setOpenAlert(!open); 
   };
 
   function Alert(props) {
@@ -84,7 +85,8 @@ export default function FormDialog({order, company, expenseOrProfit}) {
             timestamp: order.timestamp,
           })
       }, { merge: true }).then(res => {
-        setOpen(true);
+          console.log(res,' this is res')
+        setOpenAlert(true);
       }).catch(error => {
         console.log(error, 'error message')
       });
@@ -108,6 +110,7 @@ export default function FormDialog({order, company, expenseOrProfit}) {
                 timestamp: order.timestamp,
               })
           }, { merge: true }).then(res => {
+              console.log('success')
             setOpenAlert(true);
           }).catch(error => {
             console.log(error, 'error message')
@@ -188,7 +191,7 @@ export default function FormDialog({order, company, expenseOrProfit}) {
           </Alert>
        </Snackbar>
        <Snackbar open={openAlertRemove} autoHideDuration={3000}>
-          <Alert onClick={closeAlert} severity="success">
+          <Alert onClick={handleClickOpenRemove} severity="success">
             inkomst/utgift raderad!
           </Alert>
        </Snackbar>
