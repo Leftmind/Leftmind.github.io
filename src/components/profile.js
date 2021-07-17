@@ -1,74 +1,31 @@
-import {
-    Box,
-    Container,
-    Grid,
-    Card
-} from '@material-ui/core';
-import AccountProfileDetails from './profile/accountProfile';
-import planetBackground from '../images/bakgrund.jpg'
-import Banner from './assets/banner'
-import portalenHand from '../images/portalenHand.png'
-import s, { css } from 'styled-components';
+import React from 'react'
+import { Box, Container, Grid } from '@material-ui/core'
+import AccountProfileDetails from './profile/accountProfile'
 
-// import AccountProfileDetails from 'src/components/account/AccountProfileDetails';
+const Profile = ({ usedUser }) => (
+  <div>
+    <Box
+      sx={{
+        backgroundColor: 'background.default',
+        minHeight: '100%',
+        py: 3,
+      }}
+    >
+      <Container maxWidth="lg">
+        <Grid container spacing={7}>
+          <Grid item lg={8} md={12} xs={12}></Grid>
+        </Grid>
+      </Container>
 
-const BannerTitle = s.h1({
-    fontFamily: 'Alfa Slab One, cursive',
-    color: 'white',
-    textShadow: '0px 2px 5px #696969',
-    margin: 0,
-  });
+      <Container maxWidth="lg">
+        <Grid container spacing={2}>
+          <Grid item lg={8} md={12} xs={12}>
+            <AccountProfileDetails usedUser={usedUser} />
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  </div>
+)
 
-const Profile = ({ usedUser }) => {
-
-    console.log(usedUser, ' this is the user that is being used')
-
-
-    return (
-    <div>
-        <Box
-            sx={{
-                backgroundColor: 'background.default',
-                minHeight: '100%',
-                py: 3,
-            }}
-        >
-            <Container maxWidth="lg">
-
-                <Grid
-                    container
-                    spacing={7}
-                >
-                    <Grid
-                        item
-                        lg={8}
-                        md={12}
-                        xs={12}
-                    >
-                    </Grid>
-                </Grid>
-
-            </Container>
-
-            <Container maxWidth="lg">
-                
-                <Grid
-                    container
-                    spacing={2}
-                >
-                    <Grid
-                        item
-                        lg={8}
-                        md={12}
-                        xs={12}
-                    >
-                        <AccountProfileDetails usedUser={usedUser} />
-                    </Grid>
-                </Grid>
-            </Container>
-        </Box>
-    </div>
-    )
-};
-
-export default Profile;
+export default Profile

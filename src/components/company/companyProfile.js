@@ -1,218 +1,182 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
-    Box,
-    Button,
-    Card,
-    CardContent,
-    CardHeader,
-    Divider,
-    Grid,
-    TextField,
-    Avatar,
-    Typography,
-} from '@material-ui/core';
-import { useAuth } from '../../config/authProvider';
-import { firebase } from "../../config/fbConfig";
-import { Alert as MuiAlert } from '@material-ui/lab';
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  TextField,
+  Avatar,
+  Typography,
+} from '@material-ui/core'
+import { Alert as MuiAlert } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import { useAuth } from '../../config/authProvider'
+import { firebase } from '../../config/fbConfig'
 import Banner from '../assets/banner'
-import Snackbar from '@material-ui/core/Snackbar';
-
-
-
-
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const AccountProfileDetails = ({ usedUser }) => {
-    const [values, setValues] = useState("");
-    const [open, setOpen] = useState(false);
-    const [company, setCompany] = useState({
-        facebook: '-',
-        instagram: '-',
-        website: '-'
-    });
-    const [userInfo, setUserInfo] = useState("");
-    const { user, loading, logout } = useAuth();
+  const [open, setOpen] = useState(false)
+  const [company, setCompany] = useState({
+    facebook: '-',
+    instagram: '-',
+    website: '-',
+  })
+  const [userInfo, setUserInfo] = useState('')
+  const { user } = useAuth()
 
-    function Alert(props) {
-        return <MuiAlert elevation={6} variant="filled" {...props} />;
-    }
-    const closeAlert = () => {
-        setOpen(false);
-    };
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />
+  }
+  const closeAlert = () => {
+    setOpen(false)
+  }
 
-    async function handleSubmit(event) {
+  async function handleSubmit(event) {
+    event.preventDefault()
 
-        event.preventDefault();
-        console.log(userInfo, 'this is the user info')
-        console.log(user.uid, ' this is the uid')
+    await firebase
+      .firestore()
+      .collection('companies')
+      .doc(company.companyId)
+      .set(
+        {
+          facebook: company.facebook,
+          instagram: company.instagram,
+          website: company.website,
+        },
+        { merge: true },
+      )
+      .then((res) => setOpen(true))
+      .catch((error) => {
+        console.log(error, 'error message')
+      })
+  }
 
-        await firebase.firestore().collection('companies').doc(company.companyId).set({
-            facebook: company.facebook,
-            instagram: company.instagram,
-            website: company.website,
-        }, { merge: true }).then(res => {
-            console.log('successss', res)
-            setOpen(true);
-        }).catch(error => {
-            console.log(error, 'error message')
-        });
-    };
+  useEffect(() => {
+    setUserInfo(usedUser)
+    const userDocRef = firebase
+      .firestore()
+      .collection('companies')
+      .doc(usedUser.companies[0].companyId)
+    ;(async () => {
+      const dataExists = await userDocRef.get()
+      setCompany(dataExists.data())
+    })()
+  }, [usedUser])
 
+  const handleChange = (event) => {
+    setCompany({
+      ...company,
+      [event.target.name]: event.target.value,
+    })
+  }
 
-    useEffect(() => {
-        setUserInfo(usedUser)
-        const userDocRef = firebase.firestore().collection('companies').doc(usedUser.companies[0].companyId);
-        (async () => {
-          const dataExists = await userDocRef.get();
-          setCompany(dataExists.data());
-        })();
-    }, [usedUser]);
+  return (
+    <form autoComplete="off" noValidate>
+      <Card>
+        <Banner text="Mitt Företag" />
 
-
-    const handleChange = (event) => {
-        setCompany({
-            ...company,
-            [event.target.name]: event.target.value
-        });
-    };
-
-    return (
-        <form
-            autoComplete="off"
-            noValidate
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
         >
-            <Card>
-            <Banner text={"Mitt Företag"} />
-
-                <Grid
-                    container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    justify="center"
-                >
-                    <Box
-                        sx={{
-                            alignItems: 'center',
-                            display: 'flex',
-                            flexDirection: 'column'
-                        }}
-                        style={{ paddingTop : 10}}
-                    >
-                        <Avatar
-                            src={AccountCircleIcon}
-                            style={{
-                                alignItems: 'center',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: 100,
-                                width: 100,
-                            }}
-                            sx={{
-                                height: 100,
-                                width: 100
-                            }}
-                        />
-                        <Button
-                            color="primary"
-                            fullWidth
-                            variant="text"
-                        >
-                            Ladda upp företagsbild
-                        </Button>
-                        <Typography
-                            color="textSecondary"
-                            variant="body1"
-                        >
-                        </Typography>
-                    </Box>
-                </Grid>
-                <CardHeader
-                    subheader={company.bio}
-                    title={company.companyName}
-                />
-                <Divider />
-                <CardContent>
-                    <Grid
-                        container
-                        spacing={3}
-                    >
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                label="Instagram"
-                                name="instagram"
-                                onChange={handleChange}
-                                required
-                                value={company.instagram}
-                                variant="outlined"
-                            >
-                            </TextField>
-                        </Grid>
-                        <Grid
-                            item
-                            md={6}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                label="företagets facebook"
-                                name="facebook"
-                                onChange={handleChange}
-                                required
-                                value={company.facebook}
-                                variant="outlined"
-                            >
-                            </TextField>
-                        </Grid>
-                        <Grid
-                            item
-                            md={12}
-                            xs={12}
-                        >
-                            <TextField
-                                fullWidth
-                                label="Företagets hemsida"
-                                name="website"
-                                onChange={handleChange}
-                                required
-                                value={company.website}
-                                variant="outlined"
-                            />
-                        </Grid>
-                    </Grid>
-                </CardContent>
-                <Divider />
-                <Grid
-                    container
-                    spacing={0}
-                    direction="column"
-                    alignItems="center"
-                    justify="center"
-                    xs={12}
-                    style={{ padding: 20 }}
-                >
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={handleSubmit}
-                    >
-                        Spara
+          <Box
+            sx={{
+              alignItems: 'center',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+            style={{ paddingTop: 10 }}
+          >
+            <Avatar
+              src={AccountCircleIcon}
+              style={{
+                alignItems: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                height: 100,
+                width: 100,
+              }}
+              sx={{
+                height: 100,
+                width: 100,
+              }}
+            />
+            <Button color="primary" fullWidth variant="text">
+              Ladda upp företagsbild
+            </Button>
+            <Typography color="textSecondary" variant="body1"></Typography>
+          </Box>
+        </Grid>
+        <CardHeader subheader={company.bio} title={company.companyName} />
+        <Divider />
+        <CardContent>
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="Instagram"
+                name="instagram"
+                onChange={handleChange}
+                required
+                value={company.instagram}
+                variant="outlined"
+              ></TextField>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <TextField
+                fullWidth
+                label="företagets facebook"
+                name="facebook"
+                onChange={handleChange}
+                required
+                value={company.facebook}
+                variant="outlined"
+              ></TextField>
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <TextField
+                fullWidth
+                label="Företagets hemsida"
+                name="website"
+                onChange={handleChange}
+                required
+                value={company.website}
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
+        </CardContent>
+        <Divider />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          xs={12}
+          style={{ padding: 20 }}
+        >
+          <Button color="primary" variant="contained" onClick={handleSubmit}>
+            Spara
           </Button>
-                </Grid>
+        </Grid>
 
-                <Snackbar open={open} autoHideDuration={3000}>
-                    <Alert onClick={closeAlert} severity="success">
-                        Företagsinformation uppdaterad!{' '}
-                    </Alert>
-                </Snackbar>
-            </Card>
-        </form>
-    );
-};
+        <Snackbar open={open} autoHideDuration={3000}>
+          <Alert onClick={closeAlert} severity="success">
+            Företagsinformation uppdaterad!{' '}
+          </Alert>
+        </Snackbar>
+      </Card>
+    </form>
+  )
+}
 
-export default AccountProfileDetails;
+export default AccountProfileDetails

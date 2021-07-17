@@ -1,278 +1,262 @@
-import React, { Component, useState } from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import createUser from '../firebaseActions/createUser'
-import { useAuth } from "../context/AuthContext"
-import Divider from '@material-ui/core/Divider';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import React, { useState } from 'react'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import TextField from '@material-ui/core/TextField'
+import Link from '@material-ui/core/Link'
+import Grid from '@material-ui/core/Grid'
+import Typography from '@material-ui/core/Typography'
+import Container from '@material-ui/core/Container'
+import withStyles from '@material-ui/core/styles/withStyles'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import Divider from '@material-ui/core/Divider'
+import { Redirect } from 'react-router-dom'
 
-import { firebase } from "../config/fbConfig";
-
-
+import { firebase } from '../config/fbConfig'
 
 const styles = (theme) => ({
-	paper: {
-		marginTop: theme.spacing(8),
-		display: 'flex',
-		flexDirection: 'column',
-		alignItems: 'center'
-	},
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main
-	},
-	form: {
-		width: '100%', // Fix IE 11 issue.
-		marginTop: theme.spacing(3)
-	},
-	submit: {
-		margin: theme.spacing(3, 0, 2)
-	},
-	progess: {
-		position: 'absolute'
-	}
-});
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  progess: {
+    position: 'absolute',
+  },
+})
 
 function Signup(props) {
+  // const { signup } = useAuth()
+  const [loggedIn, setLoggedIn] = useState(false)
 
-	// const { signup } = useAuth()
-	const [loggedIn, setLoggedIn] = useState(false);
+  const [state, setState] = useState({
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    school: '',
+    email: '',
+    municipality: '',
+    adress: '',
+    zipCode: '',
+    password: '',
+    confirmPassword: '',
+    errors: [],
+    loading: false,
+  })
 
-	const [state, setState] = useState({
-		firstName: '',
-		lastName: '',
-		phoneNumber: '',
-		school: '',
-		email: '',
-		municipality: '',
-		adress: '',
-		zipCode: '',
-		password: '',
-		confirmPassword: '',
-		errors: [],
-		loading: false
-	});
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-	const [error, setError] = useState(false);
-	const [loading, setLoading] = useState(false);
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }))
+  }
 
-	const handleChange = (event) => {
+  async function handleSubmit(event) {
+    event.preventDefault()
+    const newUserData = state
 
-		const { name, value } = event.target;
-		setState(prevState => ({
-			...prevState,
-			[name]: value
-		}));
+    console.log(newUserData, ' hallå?')
 
-	};
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(newUserData.email, newUserData.password)
+      .then(async (res) => {
+        const user = await res.user
+        await firebase.firestore().collection('users').doc(user.uid).set({
+          email: newUserData.email,
+          password: newUserData.password,
+          firstName: newUserData.firstName,
+          lastName: newUserData.lastName,
+          phoneNumber: newUserData.phoneNumber,
+          school: newUserData.school,
+          municipality: newUserData.municipality,
+          zipCode: newUserData.zipCode,
+          adress: newUserData.adress,
+        })
+      })
+      .then(() => setLoggedIn(true))
+      .catch((error) => console.log('error', error))
+  }
 
-	async function handleSubmit(event) {
+  if (loggedIn) return <Redirect to="/" />
 
-		event.preventDefault();
-		const newUserData = state;
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={styles.paper}>
+        <Typography align="center" component="h1" variant="h5">
+          Skapa konto
+        </Typography>
+        <form noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                label="Förnamn"
+                name="firstName"
+                autoComplete="firstName"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                label="Efternamn"
+                name="lastName"
+                autoComplete="lastName"
+                onChange={handleChange}
+              />
+            </Grid>
 
-		console.log(newUserData,' hallå?')
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="school"
+                label="Skola"
+                name="school"
+                autoComplete="school"
+                onChange={handleChange}
+              />
+            </Grid>
 
-		firebase
-			.auth()
-			.createUserWithEmailAndPassword(newUserData.email, newUserData.password)
-			.then(async (res) => {
-				console.log(res,' this is result of whatever')
-				const user = await res.user;
-				await firebase.firestore().collection('users').doc(user.uid).set({
-					email: newUserData.email,
-					password: newUserData.password,
-					firstName: newUserData.firstName,
-					lastName: newUserData.lastName,
-					phoneNumber: newUserData.phoneNumber,
-					school: newUserData.school,
-					municipality: newUserData.municipality,
-					zipCode: newUserData.zipCode,
-					adress: newUserData.adress,
-				});
-			})
-			.then(() => {
-				console.log('success')
-				setLoggedIn(true);
-			})
-			.catch((error) => console.log('error', error));
+            <Grid item xs={12} sm={6}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="phoneNumber"
+                label="Telefonnummer"
+                name="phoneNumber"
+                autoComplete="phoneNumber"
+                pattern="[7-9]{1}[0-9]{9}"
+                onChange={handleChange}
+              />
+            </Grid>
 
-	};
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Mailadress"
+                name="email"
+                autoComplete="email"
+                onChange={handleChange}
+              />
+            </Grid>
 
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="municipality"
+                label="Kommun"
+                name="municipality"
+                autoComplete="municipality"
+                onChange={handleChange}
+              />
+            </Grid>
 
-	if (loggedIn) return <Redirect to="/" />
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="adress"
+                label="Gatuadress"
+                name="adress"
+                autoComplete="adress"
+                onChange={handleChange}
+              />
+            </Grid>
 
-	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<div className={styles.paper}>
-				<Typography align='center' component="h1" variant="h5">
-					Skapa konto
-					</Typography>
-				<form noValidate>
-					<Grid container spacing={2}>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="firstName"
-								label="Förnamn"
-								name="firstName"
-								autoComplete="firstName"
-								onChange={handleChange}
-							/>
-						</Grid>
-						<Grid item xs={12} sm={6}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="lastName"
-								label="Efternamn"
-								name="lastName"
-								autoComplete="lastName"
-								onChange={handleChange}
-							/>
-						</Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="zipcode"
+                label="Postnummer"
+                name="zipcode"
+                autoComplete="zipcode"
+                onChange={handleChange}
+              />
+            </Grid>
 
-						<Grid item xs={12} sm={6}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="school"
-								label="Skola"
-								name="school"
-								autoComplete="school"
-								onChange={handleChange}
-							/>
-						</Grid>
-
-						<Grid item xs={12} sm={6}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="phoneNumber"
-								label="Telefonnummer"
-								name="phoneNumber"
-								autoComplete="phoneNumber"
-								pattern="[7-9]{1}[0-9]{9}"
-								onChange={handleChange}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="email"
-								label="Mailadress"
-								name="email"
-								autoComplete="email"
-								onChange={handleChange}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="municipality"
-								label="Kommun"
-								name="municipality"
-								autoComplete="municipality"
-								onChange={handleChange}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="adress"
-								label="Gatuadress"
-								name="adress"
-								autoComplete="adress"
-								onChange={handleChange}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								id="zipcode"
-								label="Postnummer"
-								name="zipcode"
-								autoComplete="zipcode"
-								onChange={handleChange}
-							/>
-						</Grid>
-
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								name="password"
-								label="Lösenord"
-								type="password"
-								id="password"
-								autoComplete="current-password"
-								onChange={handleChange}
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								name="confirmPassword"
-								label="Repetera Lösenord"
-								type="password"
-								id="confirmPassword"
-								autoComplete="current-password"
-								onChange={handleChange}
-							/>
-						</Grid>
-					</Grid>
-					<Divider />
-					<Button
-						type="submit"
-						fullWidth
-						variant="contained"
-						color="primary"
-						onClick={handleSubmit}
-					>
-						Skapa Konto
-							{loading && <CircularProgress size={30} />}
-					</Button>
-					<Grid container justify="flex-end">
-						<Grid item>
-							<Link href="login" variant="body2" >
-								Har du redan ett konto? Logga in
-								</Link>
-						</Grid>
-					</Grid>
-				</form>
-			</div>
-		</Container>
-	);
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                label="Lösenord"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="confirmPassword"
+                label="Repetera Lösenord"
+                type="password"
+                id="confirmPassword"
+                autoComplete="current-password"
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
+          <Divider />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+          >
+            Skapa Konto
+            {loading && <CircularProgress size={30} />}
+          </Button>
+          <Grid container justify="flex-end">
+            <Grid item>
+              <Link href="login" variant="body2">
+                Har du redan ett konto? Logga in
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+  )
 }
 
-export default withStyles(styles)(Signup);
+export default withStyles(styles)(Signup)

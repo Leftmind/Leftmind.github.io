@@ -77,33 +77,6 @@ class account extends Component {
 		};
 	}
 
-	componentWillMount = () => {
-		// authMiddleWare(this.props.history);
-		// const authToken = localStorage.getItem('AuthToken');
-		// axios.defaults.headers.common = { Authorization: `${authToken}` };
-		// axios
-		// 	.get('/user')
-		// 	.then((response) => {
-		// 		console.log(response.data);
-		// 		this.setState({
-		// 			firstName: response.data.userCredentials.firstName,
-		// 			lastName: response.data.userCredentials.lastName,
-		// 			email: response.data.userCredentials.email,
-		// 			phoneNumber: response.data.userCredentials.phoneNumber,
-		// 			country: response.data.userCredentials.country,
-		// 			username: response.data.userCredentials.username,
-		// 			uiLoading: false
-		// 		});
-		// 	})
-		// 	.catch((error) => {
-		// 		if (error.response.status === 403) {
-		// 			this.props.history.push('/login');
-		// 		}
-		// 		console.log(error);
-		// 		this.setState({ errorMsg: 'Error in retrieving the data' });
-		// 	});
-	};
-
 	handleChange = (event) => {
 		this.setState({
 			[event.target.name]: event.target.value
