@@ -1,32 +1,66 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Box,
   Button,
   Card,
   CardContent,
   CardHeader,
-  Divider,
   Grid,
   TextField,
-  Avatar,
-  Typography,
 } from '@material-ui/core'
 import { Alert as MuiAlert } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { useAuth } from '../../config/authProvider'
 import { firebase } from '../../config/fbConfig'
 import Banner from '../assets/banner'
+import UploadImage from '../UploadImage'
+
+const storage = firebase.storage()
 
 const AccountProfileDetails = ({ usedUser }) => {
   const [open, setOpen] = useState(false)
+  const [file, setFile] = useState(false)
   const [company, setCompany] = useState({
     facebook: '-',
     instagram: '-',
     website: '-',
   })
+  const [companyImage, setCompanyImage] = useState(null)
   const [userInfo, setUserInfo] = useState('')
+  const [loading, setLoading] = useState(false)
   const { user } = useAuth()
+
+  const onFileChange = (e) => setFile(e.target.files[0])
+
+  const uploadUserImage = async () => {
+    setLoading(true)
+    const storageRef = storage.ref()
+    const fileRef = storageRef.child(file.name)
+    await fileRef.put(file)
+    const uploadedImage = await fileRef.getDownloadURL()
+
+    await firebase
+      .firestore()
+      .collection('companies')
+      .doc(usedUser.companies[0].companyId)
+      .set(
+        {
+          companyImage: uploadedImage,
+        },
+        { merge: true },
+      )
+      .catch((error) => {
+        console.log(error, 'error message')
+      })
+
+    setCompanyImage(uploadedImage)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    if (file) {
+      uploadUserImage()
+    }
+  }, [file])
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />
@@ -65,6 +99,7 @@ const AccountProfileDetails = ({ usedUser }) => {
     ;(async () => {
       const dataExists = await userDocRef.get()
       setCompany(dataExists.data())
+      setCompanyImage(dataExists.data().companyImage)
     })()
   }, [usedUser])
 
@@ -87,36 +122,13 @@ const AccountProfileDetails = ({ usedUser }) => {
           alignItems="center"
           justify="center"
         >
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-            style={{ paddingTop: 10 }}
-          >
-            <Avatar
-              src={AccountCircleIcon}
-              style={{
-                alignItems: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                height: 100,
-                width: 100,
-              }}
-              sx={{
-                height: 100,
-                width: 100,
-              }}
-            />
-            <Button color="primary" fullWidth variant="text">
-              Ladda upp företagsbild
-            </Button>
-            <Typography color="textSecondary" variant="body1"></Typography>
-          </Box>
+          <UploadImage
+            loading={loading}
+            uploadedImage={companyImage}
+            onFileChange={onFileChange}
+          />
         </Grid>
         <CardHeader subheader={company.bio} title={company.companyName} />
-        <Divider />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
@@ -154,7 +166,6 @@ const AccountProfileDetails = ({ usedUser }) => {
             </Grid>
           </Grid>
         </CardContent>
-        <Divider />
         <Grid
           container
           spacing={0}

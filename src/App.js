@@ -5,7 +5,6 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme'
 import login from './pages/login'
 import signup from './pages/signup'
 import homePage from './pages/homePage'
-// import { AuthProvider } from "./context/AuthContext";
 import { AuthProvider } from './config/authProvider'
 
 const theme = createMuiTheme({

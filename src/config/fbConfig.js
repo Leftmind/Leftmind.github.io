@@ -1,7 +1,7 @@
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+import firebase from 'firebase/app'
+import 'firebase/firestore'
+import 'firebase/auth'
+import 'firebase/storage'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBeHIIcFMVgpob7AJ9q43rWp7fjzsndrvo',
@@ -12,13 +12,13 @@ const firebaseConfig = {
   messagingSenderId: '815318095841',
   projectId: 'framtidsportalen-ebc81',
   storageBucket: 'framtidsportalen-ebc81.appspot.com',
-};
-
-function initFirebase(){
-    if(!firebase.apps.length){
-        firebase.initializeApp(firebaseConfig);
-    }
 }
 
-initFirebase();
-export { firebase };
+function initFirebase() {
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
+  }
+}
+
+initFirebase()
+export { firebase }
