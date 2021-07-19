@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Box, Container, Grid } from '@material-ui/core'
+import { Container, Grid } from '@material-ui/core'
 import { Alert as MuiAlert } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
 import JoinCompany from './company/createOrJoinCompany'
@@ -78,41 +78,28 @@ function Company({ usedUser }) {
   }, [joinOrCreate, usedUser.firstName, user.uid, usedUser.lastName])
 
   return (
-    <Box
-      sx={{
-        backgroundColor: 'background.default',
-        minHeight: '100%',
-        py: 3,
-      }}
-    >
-      <Container>
-        <Grid container spacing={3}>
-          {!hasCompany && (
-            <Grid item lg={3} sm={6} xl={3} xs={12}>
+    <Container>
+      <Grid container spacing={3} style={{ marginBottom: 40 }}>
+        {hasCompany ? (
+          <>
+            <Grid item xs={12}>
+              <CompanyProfile usedUser={usedUser} />
+            </Grid>
+            <Grid item xs={12}>
+              <AllMembers usedUser={usedUser} />
+            </Grid>
+          </>
+        ) : (
+          <>
+            <Grid item xs={12}>
               <JoinCompany join={false} onChange={handleChange} />
             </Grid>
-          )}
-          {!hasCompany && (
             <Grid item lg={8} md={12} xl={9} xs={12}>
               <CreateCompany />
             </Grid>
-          )}
-          {hasCompany && (
-            <Container maxWidth="lg">
-              <Grid container spacing={2}>
-                <Grid item lg={12} md={12} xl={12} xs={12}>
-                  <CompanyProfile usedUser={usedUser} />
-                </Grid>
-              </Grid>
-            </Container>
-          )}
-          {hasCompany && (
-            <Grid item lg={8} md={12} xl={9} xs={12}>
-              <AllMembers usedUser={usedUser} />
-            </Grid>
-          )}
-        </Grid>
-      </Container>
+          </>
+        )}
+      </Grid>
       <Snackbar open={open} autoHideDuration={3000}>
         <Alert onClick={closeAlert} severity="success">
           Förfrågan skickad!
@@ -123,7 +110,7 @@ function Company({ usedUser }) {
           Något gick fel, kanske fel företagsnamn?
         </Alert>
       </Snackbar>
-    </Box>
+    </Container>
   )
 }
 

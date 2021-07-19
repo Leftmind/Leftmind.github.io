@@ -114,7 +114,6 @@ const AccountProfileDetails = ({ usedUser }) => {
     <form autoComplete="off" noValidate>
       <Card>
         <Banner text="Mitt Företag" />
-
         <Grid
           container
           spacing={0}
@@ -126,9 +125,14 @@ const AccountProfileDetails = ({ usedUser }) => {
             loading={loading}
             uploadedImage={companyImage}
             onFileChange={onFileChange}
+            company
           />
         </Grid>
-        <CardHeader subheader={company.bio} title={company.companyName} />
+        <CardHeader
+          subheader={company.bio}
+          title={company.companyName}
+          style={{ paddingTop: 20, paddingBottom: 20 }}
+        />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>
