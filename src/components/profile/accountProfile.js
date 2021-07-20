@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Box,
   Button,
   Card,
   CardContent,
   CardHeader,
   Grid,
   TextField,
-  Avatar,
-  Typography,
-  CardMedia,
-  CircularProgress,
 } from '@material-ui/core'
 import { Alert as MuiAlert } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { firebase } from '../../config/fbConfig'
 import { useAuth } from '../../config/authProvider'
 import Banner from '../assets/banner'
@@ -108,7 +102,6 @@ const AccountProfileDetails = ({ usedUser }) => {
     <form autoComplete="off" noValidate>
       <Card>
         <Banner text="Min Profil" />
-
         <Grid
           container
           spacing={0}
@@ -123,7 +116,11 @@ const AccountProfileDetails = ({ usedUser }) => {
             profil={true}
           />
         </Grid>
-        <CardHeader subheader="Du kan ändra informationen här" title="Profil" />
+        <CardHeader
+          subheader="Du kan ändra informationen här"
+          title="Profil"
+          style={{ marginTop: 10, marginBottom: 10 }}
+        />
         <CardContent>
           <Grid container spacing={3}>
             <Grid item md={6} xs={12}>

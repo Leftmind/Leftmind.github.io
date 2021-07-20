@@ -13,9 +13,11 @@ function JoinCompany({ join, onChange }) {
   const [joinOrNot, setJoinOrNot] = useState('')
 
   function joinOrCreate() {
-    join
-      ? setJoinOrNot({ create: true })
-      : setJoinOrNot({ create: false, companyName: state.companyName })
+    if (join) {
+      setJoinOrNot({ create: true })
+    } else {
+      setJoinOrNot({ create: false, companyName: state.companyName })
+    }
 
     onChange(joinOrNot)
   }
@@ -33,7 +35,7 @@ function JoinCompany({ join, onChange }) {
   }
 
   return (
-    <Card sx={{ height: '100%' }}>
+    <Card sx={{ height: '100%', width: '100%' }}>
       <CardContent style={{ justifyContent: 'center' }}>
         <Grid container spacing={3}>
           <Grid item>
@@ -46,7 +48,6 @@ function JoinCompany({ join, onChange }) {
               {join ? 'Starta ett nytt företag' : 'Joina existerande företag'}
             </Button>
           </Grid>
-          <Grid item></Grid>
         </Grid>
         <Box
           sx={{

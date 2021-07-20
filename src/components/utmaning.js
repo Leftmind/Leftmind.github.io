@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react'
 import {
   Card,
@@ -10,6 +11,7 @@ import {
   Dialog,
   DialogContent,
   DialogContentText,
+  Container,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import StarBorder from '@material-ui/icons/StarBorder'
@@ -325,7 +327,7 @@ const Utmaning = ({ usedUser }) => {
   }
 
   return (
-    <>
+    <Container>
       <Card className={classes.root}>
         <CardContent className={classes.cardContent}>
         <Banner text="Utmaning" />
@@ -393,7 +395,7 @@ const Utmaning = ({ usedUser }) => {
           {...dialogData}
         />
       )}
-    </>
+    </Container>
   )
 }
 

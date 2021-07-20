@@ -44,6 +44,7 @@ const icons = [
   <AssignmentIcon />,
   <AssessmentIcon />,
   <GroupIcon />,
+  <BusinessIcon />,
   <ExitToAppIcon />,
 ]
 const appPages = [
@@ -85,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    paddingTop: theme.spacing(3),
   },
   avatar: {
     height: 110,
@@ -145,7 +146,6 @@ function ResponsiveDrawer(props) {
           </p>
         </center>
       </List>
-      <Divider />
       <List>
         {appPages.map((text, index) => {
           const selectedPage = page === text
@@ -176,7 +176,6 @@ function ResponsiveDrawer(props) {
           <ListItemText primary="logga ut" />
         </ListItem>
       </List>
-      <Divider />
     </div>
   )
 

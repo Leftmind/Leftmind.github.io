@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import {
-  Box,
   Card,
   CardHeader,
-  Divider,
   Grid,
   Container,
+  Box,
+  Typography,
 } from '@material-ui/core'
 import Expenses from './pengakollen/expenses'
 import ExpenseAmountMoney from './pengakollen/expenseAmountMoney'
@@ -23,7 +24,6 @@ const Pengakollen = ({ usedUser }) => {
 
   useEffect(async () => {
     setUserInfo(usedUser)
-
     const userDocRef = firebase
       .firestore()
       .collection('companies')
@@ -32,12 +32,23 @@ const Pengakollen = ({ usedUser }) => {
     setCompany(dataExists.data())
   }, [])
 
-  if (!hasCompany) return <div> Starta eller joina ett företag först</div>
+
+  if (!hasCompany)
+    return (
+      <Container>
+        <Card
+          style={{ background: 'white', paddingTop: 20, paddingBottom: 20 }}
+        >
+          <Typography align="center" variant="h4">
+            Start or join a company first
+          </Typography>
+        </Card>
+      </Container>
+    )
   return (
-    <>
+    <Container style={{ marginBottom: 40 }}>
       <Card>
         <Banner text="Pengakollen" />
-
         <CardHeader
           subheader="Att hålla koll på ekonomin är viktigt. Pengar in (intäkter) och pengar ut (utgifter) berättar om ditt företags resultat - det vill säga hur mycket vinst eller förlust ditt företag går.
         ,,
@@ -45,32 +56,19 @@ const Pengakollen = ({ usedUser }) => {
           "
           title="Håll koll på ekonomin!"
         />
-        <Divider />
       </Card>
-
-      <Box
-        style={{ marginTop: 10 }}
-        sx={{
-          backgroundColor: 'background.default',
-          minHeight: '100%',
-          py: 3,
-        }}
-      >
-        <Container maxWidth={false}>
-          <Grid container spacing={3}>
-            <Grid item lg={6} md={6} xl={6} xs={12}>
-              <Expenses usedUser={usedUser} expense />
-            </Grid>
-            <Grid item lg={6} md={6} xl={6} xs={12}>
-              <Expenses usedUser={usedUser} expense={false} />
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
-      <Grid item lg={12} md={12} xl={12} xs={12}>
-        <ExpenseAmountMoney usedUser={usedUser} sx={{ height: '100%' }} />
+      <Grid container spacing={3} style={{ marginTop: 10 }}>
+        <Grid item xs={12} md={6}>
+          <Expenses usedUser={usedUser} expense />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Expenses usedUser={usedUser} />
+        </Grid>
+        <Grid item xs={12}>
+          <ExpenseAmountMoney usedUser={usedUser} />
+        </Grid>
       </Grid>
-    </>
+    </Container>
   )
 }
 
