@@ -21,6 +21,7 @@ import twoKpoints from '../assets/badge_2000_points.png'
 import cooperation from '../assets/badge_cooperation.png'
 import firstHundredKronor from '../assets/badge_first_hundred_kronor.png'
 import { firebase } from '../config/fbConfig'
+import Banner from './assets/banner'
 
 const useStyles = makeStyles({
   root: {
@@ -327,14 +328,7 @@ const Utmaning = ({ usedUser }) => {
     <>
       <Card className={classes.root}>
         <CardContent className={classes.cardContent}>
-          <Typography
-            gutterBottom
-            variant="h4"
-            align="center"
-            className={classes.cardTitle}
-          >
-            Utmaning
-          </Typography>
+        <Banner text="Utmaning" />
           <Grid
             container
             spacing={3}
