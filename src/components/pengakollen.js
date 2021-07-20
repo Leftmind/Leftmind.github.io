@@ -22,15 +22,6 @@ const Pengakollen = ({ usedUser }) => {
     website: '-',
   })
 
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA',
-  })
-
   useEffect(async () => {
     setUserInfo(usedUser)
     const userDocRef = firebase
@@ -40,6 +31,7 @@ const Pengakollen = ({ usedUser }) => {
     const dataExists = await userDocRef.get()
     setCompany(dataExists.data())
   }, [])
+
 
   if (!hasCompany)
     return (

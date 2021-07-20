@@ -10,6 +10,7 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 const UploadImage = (props) => {
+
   const { loading, uploadedImage, onFileChange, company } = props
   return (
     <Box

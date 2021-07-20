@@ -23,6 +23,7 @@ import twoKpoints from '../assets/badge_2000_points.png'
 import cooperation from '../assets/badge_cooperation.png'
 import firstHundredKronor from '../assets/badge_first_hundred_kronor.png'
 import { firebase } from '../config/fbConfig'
+import Banner from './assets/banner'
 
 const useStyles = makeStyles({
   root: {
@@ -329,14 +330,7 @@ const Utmaning = ({ usedUser }) => {
     <Container>
       <Card className={classes.root}>
         <CardContent className={classes.cardContent}>
-          <Typography
-            gutterBottom
-            variant="h4"
-            align="center"
-            className={classes.cardTitle}
-          >
-            Utmaning
-          </Typography>
+        <Banner text="Utmaning" />
           <Grid
             container
             spacing={3}
@@ -349,8 +343,8 @@ const Utmaning = ({ usedUser }) => {
               </Typography>
               <Typography className={classes.utmaningDescription}>
                 Vi vet att du utmanar dig själv bara genom att vara med i
-                Framtidens Företagare. Nu vill vu utmana dig! Vi har samlat ihop
-                åtta utmaningar till dig - vissa är svårare än andra
+                Framtidens Företagare. Nu vill vi utmana dig! Vi har samlat ihop
+                åtta utmaningar till dig - vissa är svårare än andra!
               </Typography>
             </Grid>
             {cardData.map(({ id, text, img, completed }, i) => (

@@ -113,6 +113,7 @@ const AccountProfileDetails = ({ usedUser }) => {
             loading={loading}
             uploadedImage={userImage}
             onFileChange={onFileChange}
+            profil={true}
           />
         </Grid>
         <CardHeader
