@@ -10,7 +10,7 @@ import {
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 
 const UploadImage = (props) => {
-  const { loading, uploadedImage, onFileChange } = props
+  const { loading, uploadedImage, onFileChange, profil } = props
   return (
     <Box
       style={{
@@ -69,7 +69,10 @@ const UploadImage = (props) => {
         component="label"
         style={{ marginTop: 20 }}
       >
-        Ladda upp företagsbild
+        {profil ? 
+        'Ladda upp profilbild' :
+        'Ladda upp företagsbild'
+        }
         <input type="file" hidden onChange={onFileChange} />
       </Button>
       <Typography color="textSecondary" variant="body1"></Typography>

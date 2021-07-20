@@ -91,10 +91,10 @@ const ExpenseAmountMoney = ({usedUser}) => {
     let profits = 0;
 
 
-    if(companyData.expenses.length > 1){
+    if(companyData.expenses.length >= 1){
       expenses = companyData.expenses.map(item => item.transactionAmount).reduce((prev, next) => +prev + +next);
     }
-    if(companyData.profits.length > 1){
+    if(companyData.profits.length >= 1){
       profits = companyData.profits.map(item => item.transactionAmount).reduce((prev, next) => +prev + +next);
     } 
 

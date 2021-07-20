@@ -33,6 +33,7 @@ import { useAuth } from '../config/authProvider'
 import FramtidsPortalenLogo from '../assets/Logga-framtidsportalen.png'
 import FramtidsPortalenBanner from '../assets/framtidsportalen-logga_alt.png'
 import AllCompanies from '../components/allCompanies'
+import GroupIcon from '@material-ui/icons/Group';
 
 const drawerWidth = 240
 
@@ -42,6 +43,7 @@ const icons = [
   <MonetizationOnIcon />,
   <AssignmentIcon />,
   <AssessmentIcon />,
+  <GroupIcon />,
   <ExitToAppIcon />,
 ]
 const appPages = [
@@ -170,7 +172,7 @@ function ResponsiveDrawer(props) {
           )
         })}
         <ListItem button onClick={logout}>
-          <ListItemIcon>{icons[5]}</ListItemIcon>
+          <ListItemIcon>{icons[6]}</ListItemIcon>
           <ListItemText primary="logga ut" />
         </ListItem>
       </List>

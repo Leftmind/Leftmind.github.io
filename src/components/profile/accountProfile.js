@@ -120,6 +120,7 @@ const AccountProfileDetails = ({ usedUser }) => {
             loading={loading}
             uploadedImage={userImage}
             onFileChange={onFileChange}
+            profil={true}
           />
         </Grid>
         <CardHeader subheader="Du kan ändra informationen här" title="Profil" />

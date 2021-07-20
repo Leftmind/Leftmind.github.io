@@ -21,18 +21,8 @@ const Pengakollen = ({ usedUser }) => {
     website: '-',
   })
 
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA',
-  })
-
   useEffect(async () => {
     setUserInfo(usedUser)
-    console.log(userInfo, 'från account profile page')
 
     const userDocRef = firebase
       .firestore()
@@ -40,12 +30,9 @@ const Pengakollen = ({ usedUser }) => {
       .doc(usedUser.companies[0].companyId)
     const dataExists = await userDocRef.get()
     setCompany(dataExists.data())
-
-    console.log(company)
-    console.log(dataExists.data(), 'user data')
   }, [])
 
-  if (!hasCompany) return <div> Start or join a company first</div>
+  if (!hasCompany) return <div> Starta eller joina ett företag först</div>
   return (
     <>
       <Card>

@@ -126,6 +126,7 @@ const AccountProfileDetails = ({ usedUser }) => {
             loading={loading}
             uploadedImage={companyImage}
             onFileChange={onFileChange}
+            profil={false}
           />
         </Grid>
         <CardHeader subheader={company.bio} title={company.companyName} />

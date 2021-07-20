@@ -347,8 +347,8 @@ const Utmaning = ({ usedUser }) => {
               </Typography>
               <Typography className={classes.utmaningDescription}>
                 Vi vet att du utmanar dig själv bara genom att vara med i
-                Framtidens Företagare. Nu vill vu utmana dig! Vi har samlat ihop
-                åtta utmaningar till dig - vissa är svårare än andra
+                Framtidens Företagare. Nu vill vi utmana dig! Vi har samlat ihop
+                åtta utmaningar till dig - vissa är svårare än andra!
               </Typography>
             </Grid>
             {cardData.map(({ id, text, img, completed }, i) => (

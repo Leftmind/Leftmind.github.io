@@ -85,6 +85,7 @@ const Expenses = ({ usedUser, expense }) => {
     facebook: '-',
     instagram: '-',
   });
+  const [updatePage, setUpdatePage] = useState(false);
   const [state, setState] = useState({
     sum: '',
     comment: '',
@@ -155,6 +156,7 @@ const Expenses = ({ usedUser, expense }) => {
         console.log(error, 'error message')
       });
     }
+    setUpdatePage(true)
   };
 
   useEffect(async () => {
@@ -172,8 +174,9 @@ const Expenses = ({ usedUser, expense }) => {
     })
 
     setCompany(companyData);
+    setUpdatePage(false);
 
-  }, []);
+  }, [updatePage]);
 
   if (!company.website) return null
   else
@@ -253,6 +256,7 @@ const Expenses = ({ usedUser, expense }) => {
               <TableBody>
 
                 {expenseOrProfit ?
+                company.expenses[0] ?
                   company.expenses.map((order, i) => {
                     const date = new Date(order.timestamp.seconds);
                     return (
@@ -267,12 +271,13 @@ const Expenses = ({ usedUser, expense }) => {
                           {moment(date * 1000).format('YYYY-MM-DD')}
                         </TableCell>
                         <TableCell>
-                          <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} usedUser={usedUser} />
+                          <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} usedUser={usedUser} setUpdatePage={setUpdatePage} />
                         </TableCell>
                       </TableRow>
                     )
-                  })
+                  }) : null           
                   :
+                  company.profits[0] ?
                   company.profits.map((order, i) => (
                     <TableRow
                       hover
@@ -285,10 +290,10 @@ const Expenses = ({ usedUser, expense }) => {
                         {moment(order.createdAt).format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell>
-                        <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} usedUser={usedUser}/>
+                        <FormDialog order={order} company={company} expenseOrProfit={expenseOrProfit} usedUser={usedUser} setUpdatePage={setUpdatePage}/>
                       </TableCell>
                     </TableRow>
-                  ))
+                  )) : null
                 }
 
               </TableBody>

@@ -13,6 +13,7 @@ import { Alert as MuiAlert } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
 import { firebase } from '../../config/fbConfig'
 import { useAuth } from '../../config/authProvider'
+import goals from '../assets/goals'
 
 const styles = (theme) => ({
   paper: {
@@ -80,6 +81,7 @@ function CreateCompany(props) {
     event.preventDefault()
 
     const firestoreId = generateUniqueFirestoreId()
+    console.log(goals(), 'all goals');
 
     await firebase
       .firestore()
@@ -101,8 +103,9 @@ function CreateCompany(props) {
             pending: false,
           },
         ],
-        expenses: [{}],
-        profits: [{}],
+        expenses: [],
+        profits: [],
+        challenges: goals(),
       })
       .then(() => {
         addCompanyToAccount(newUserData, firestoreId)
