@@ -10,6 +10,8 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Divider from '@material-ui/core/Divider'
 import { Redirect } from 'react-router-dom'
+import { Alert as MuiAlert } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
 
 import { firebase } from '../config/fbConfig'
 
@@ -39,6 +41,14 @@ const styles = (theme) => ({
 function Signup(props) {
   // const { signup } = useAuth()
   const [loggedIn, setLoggedIn] = useState(false)
+  const [open, setOpen] = useState(false)
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />
+  }
+  const closeAlert = () => {
+    setOpen(false)
+  }
 
   const [state, setState] = useState({
     firstName: '',
@@ -90,7 +100,7 @@ function Signup(props) {
         })
       })
       .then(() => setLoggedIn(true))
-      .catch((error) => console.log('error', error))
+      .catch((error) => setOpen(true))
   }
 
   if (loggedIn) return <Redirect to="/" />
@@ -255,6 +265,11 @@ function Signup(props) {
           </Grid>
         </form>
       </div>
+      <Snackbar open={open} autoHideDuration={3000}>
+          <Alert onClick={closeAlert} severity="error">
+            Nåt gick fel, stämmer allt? {' '}
+          </Alert>
+        </Snackbar>
     </Container>
   )
 }

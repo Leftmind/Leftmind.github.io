@@ -139,86 +139,127 @@ export default function FormDialog({
           console.log(error, 'error message')
         })
     }
-    setOpen(false)
-  }
+    const closeAlert = () => {
+        setOpenAlert(false);
+    };
 
-  async function handleRemove(event) {
-    if (expenseOrProfit) {
-      await firebase
-        .firestore()
-        .collection('companies')
-        .doc(company.companyId)
-        .set(
-          {
-            expenses: firebase.firestore.FieldValue.arrayRemove({
-              comment: order.comment,
-              transactionAmount: order.transactionAmount,
-              transactionId: order.transactionId,
-              timestamp: order.timestamp,
-            }),
-          },
-          { merge: true },
-        )
-        .then((res) => {
-          setOpenAlertRemove(true)
-        })
-        .catch((error) => {
-          console.log(error, 'error message')
-        })
-    } else {
-      await firebase
-        .firestore()
-        .collection('companies')
-        .doc(company.companyId)
-        .set(
-          {
-            profits: firebase.firestore.FieldValue.arrayRemove({
-              comment: order.comment,
-              transactionAmount: order.transactionAmount,
-              transactionId: order.transactionId,
-              timestamp: order.timestamp,
-            }),
-          },
-          { merge: true },
-        )
-        .then((res) => {
-          console.log(res, ' this is the company back')
-          setUpdatePage(true)
-          setOpenAlertRemove(true)
-        })
-        .catch((error) => {
-          console.log(error, 'error message')
-        })
-    }
-    setOpen(false)
-  }
+    async function handleChange(event) {
 
-  return (
-    <div>
-      <IconButton style={{ padding: 0 }}>
-        <EditIcon onClick={handleClickOpen} />
-      </IconButton>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Kommentar</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{order.comment}</DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id={order.orderId}
-            label="Ändra kommentar"
-            name="comment"
-            fullWidth
-            onChange={handleText}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="secondary" id={order.orderId}>
-            Avbryt
+        if (expenseOrProfit) {
+            await firebase.firestore().collection('companies').doc(company.companyId).set({
+                expenses: firebase.firestore.FieldValue.arrayUnion(
+                    {
+                        comment: state.comment,
+                        transactionAmount: order.transactionAmount,
+                        transactionId: order.transactionId,
+                        timestamp: order.timestamp,
+                    })
+            }, { merge: true });
+
+            await firebase.firestore().collection('companies').doc(company.companyId).set({
+                expenses: firebase.firestore.FieldValue.arrayRemove(
+                    {
+                        comment: order.comment,
+                        transactionAmount: order.transactionAmount,
+                        transactionId: order.transactionId,
+                        timestamp: order.timestamp,
+                    })
+            }, { merge: true }).then(res => {
+                setUpdatePage(true);
+                setOpenAlert(true);
+            }).catch(error => {
+                console.log(error, 'error message')
+            });
+        } else {
+            await firebase.firestore().collection('companies').doc(company.companyId).set({
+                profits: firebase.firestore.FieldValue.arrayUnion(
+                    {
+                        comment: state.comment,
+                        transactionAmount: order.transactionAmount,
+                        transactionId: order.transactionId,
+                        timestamp: order.timestamp,
+                    })
+            }, { merge: true });
+
+            await firebase.firestore().collection('companies').doc(company.companyId).set({
+                profits: firebase.firestore.FieldValue.arrayRemove(
+                    {
+                        comment: order.comment,
+                        transactionAmount: order.transactionAmount,
+                        transactionId: order.transactionId,
+                        timestamp: order.timestamp,
+                    })
+            }, { merge: true }).then(res => {
+                setUpdatePage(true);
+                console.log('success', res)
+                setOpenAlert(true);
+            }).catch(error => {
+                console.log(error, 'error message')
+            });
+        }
+        setOpen(false);
+    };
+
+    async function handleRemove(event) {
+        if (expenseOrProfit) {
+            await firebase.firestore().collection('companies').doc(company.companyId).set({
+                expenses: firebase.firestore.FieldValue.arrayRemove(
+                    {
+                        comment: order.comment,
+                        transactionAmount: order.transactionAmount,
+                        transactionId: order.transactionId,
+                        timestamp: order.timestamp,
+                    })
+            }, { merge: true }).then(res => {
+                setUpdatePage(true);
+                setOpenAlertRemove(true);
+            }).catch(error => {
+                console.log(error, 'error message')
+            });
+        } else {
+            await firebase.firestore().collection('companies').doc(company.companyId).set({
+                profits: firebase.firestore.FieldValue.arrayRemove(
+                    {
+                        comment: order.comment,
+                        transactionAmount: order.transactionAmount,
+                        transactionId: order.transactionId,
+                        timestamp: order.timestamp,
+                    })
+            }, { merge: true }).then(res => {
+                console.log(res, ' this is the company back')
+                setUpdatePage(true);
+                setOpenAlertRemove(true);
+            }).catch(error => {
+                console.log(error, 'error message')
+            });
+        }
+        setOpen(false);
+    };
+
+    return (
+        <div>
+            <IconButton style={{ padding: 0 }}>
+                <EditIcon onClick={handleClickOpen} />
+            </IconButton>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Kommentar</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {order.comment}
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id={order.orderId}
+                        label="Ändra kommentar"
+                        name="comment"
+                        fullWidth
+                        onChange={handleText}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="secondary" id={order.orderId}>
+                        Avbryt
           </Button>
           <Button
             onClick={() => handleChange(order)}

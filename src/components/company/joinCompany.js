@@ -16,27 +16,8 @@ import CheckIcon from '@material-ui/icons/Check'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff'
 import { useAuth } from '../../config/authProvider'
 import { firebase } from '../../config/fbConfig'
-
-const products = [
-  {
-    id: 1,
-    name: 'Dropbox',
-    imageUrl: FaceIcon,
-    updatedAt: moment().subtract(2, 'hours'),
-  },
-  {
-    id: 2,
-    name: 'Medium Corporation',
-    imageUrl: '/static/images/products/product_2.png',
-    updatedAt: moment().subtract(2, 'hours'),
-  },
-  {
-    id: 3,
-    name: 'Slack',
-    imageUrl: '/static/images/products/product_3.png',
-    updatedAt: moment().subtract(3, 'hours'),
-  },
-]
+import { Alert as MuiAlert } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
 
 function AllMembers({ usedUser }) {
   const { user, loading, logout } = useAuth()
@@ -44,6 +25,14 @@ function AllMembers({ usedUser }) {
   const [company, setCompany] = useState(false)
   const [userInfo, setUserInfo] = useState(false)
   const [members, setMembers] = useState(false)
+
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />
+  }
+  const closeAlert = () => {
+    setOpen(false)
+  }
 
   async function acceptMember(e) {
     const userToJoinid = e
@@ -150,7 +139,6 @@ function AllMembers({ usedUser }) {
   return (
     <Card>
       <CardHeader
-        subtitle={`${products.length} in total`}
         title="Alla medlemmar"
       />
       <Divider />
@@ -195,6 +183,11 @@ function AllMembers({ usedUser }) {
           p: 2,
         }}
       ></Box>
+            <Snackbar open={open} autoHideDuration={3000}>
+        <Alert onClick={closeAlert} severity="success">
+          Medlem accepterad!
+        </Alert>
+      </Snackbar>
     </Card>
   )
 }

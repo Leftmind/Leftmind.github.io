@@ -18,6 +18,8 @@ import StarBorder from '@material-ui/icons/StarBorder'
 import Star from '@material-ui/icons/Star'
 import CheckCircle from '@material-ui/icons/CheckCircle'
 import Close from '@material-ui/icons/Close'
+import { Alert as MuiAlert } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
 import firstCustomerImg from '../assets/badge_first_customer.png'
 import twoKpoints from '../assets/badge_2000_points.png'
 import cooperation from '../assets/badge_cooperation.png'
@@ -121,6 +123,13 @@ const useStyles = makeStyles({
   paper: { borderRadius: 20 },
 })
 
+const happyAlert = [
+  'Snyggt kingen!',
+  'bra jobbat!',
+  'Ge dig själv en klapp på axeln',
+  'du förtjänar en applåd!',
+]
+
 const DialogBox = (props) => {
   const classes = useStyles()
   const {
@@ -215,6 +224,7 @@ const Utmaning = ({ usedUser }) => {
   const [company, setCompany] = useState({})
   const [dialogData, setDialogData] = useState({ open: false, dialogObj: null })
   const [cardData, setCardData] = useState([])
+  const [open, setOpen] = useState(false)
 
   const handleOpenDialog = (dialogId) => {
     setDialogData({ open: true, dialogId })
@@ -222,6 +232,13 @@ const Utmaning = ({ usedUser }) => {
 
   const handleCloseDialog = () => {
     setDialogData({ open: false, dialogId: null })
+  }
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />
+  }
+  const closeAlert = () => {
+    setOpen(false)
   }
 
   useEffect(() => {
@@ -321,7 +338,12 @@ const Utmaning = ({ usedUser }) => {
         },
         { merge: true },
       )
-      .catch((error) => console.log(error, 'error message'))
+      .then(() => {
+        setOpen(true)
+      })
+      .catch((error) => {
+        console.log(error, 'error message')
+      })
   }
 
   return (
@@ -337,7 +359,7 @@ const Utmaning = ({ usedUser }) => {
           >
             <Grid item xs={12}>
               <Typography className={classes.utmaningDescriptionHeader}>
-                32w vi utmanar dig
+                Vi utmanar dig
               </Typography>
               <Typography className={classes.utmaningDescription}>
                 Vi vet att du utmanar dig själv bara genom att vara med i
@@ -382,6 +404,11 @@ const Utmaning = ({ usedUser }) => {
             ))}
           </Grid>
         </CardContent>
+        <Snackbar open={open} autoHideDuration={3000}>
+          <Alert onClick={closeAlert} severity="success">
+            {happyAlert[Math.floor(Math.random() * 3) + 1]}
+          </Alert>
+        </Snackbar>
       </Card>
       {dialogData.open && (
         <DialogBox

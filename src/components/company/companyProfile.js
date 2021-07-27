@@ -23,6 +23,7 @@ const AccountProfileDetails = ({ usedUser }) => {
     facebook: '-',
     instagram: '-',
     website: '-',
+    bio: '-',
   })
   const [companyImage, setCompanyImage] = useState(null)
   const [userInfo, setUserInfo] = useState('')
@@ -81,6 +82,7 @@ const AccountProfileDetails = ({ usedUser }) => {
           facebook: company.facebook,
           instagram: company.instagram,
           website: company.website,
+          bio: company.bio
         },
         { merge: true },
       )
@@ -129,12 +131,22 @@ const AccountProfileDetails = ({ usedUser }) => {
           />
         </Grid>
         <CardHeader
-          subheader={company.bio}
           title={company.companyName}
           style={{ paddingTop: 20, paddingBottom: 20 }}
         />
         <CardContent>
           <Grid container spacing={3}>
+          <Grid item md={12} xs={12}>
+              <TextField
+                fullWidth
+                label="Företagets bio"
+                name="bio"
+                onChange={handleChange}
+                required
+                value={company.bio}
+                variant="outlined"
+              />
+            </Grid>
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth

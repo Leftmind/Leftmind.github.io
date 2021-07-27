@@ -11,11 +11,12 @@ import { useAuth } from '../config/authProvider'
 
 function Company({ usedUser }) {
   const hasCompany = 'companies' in usedUser
-  const [joinOrCreate, setJoinOrCrate] = useState(false)
+  const [joinOrCreate, setJoinOrCrate] = useState("")
   const { user, loading, logout } = useAuth()
 
   const [open, setOpen] = useState(false)
   const [openError, setOpenError] = useState(false)
+  const [forceCheck, setForceCheck] = useState(false);
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />
@@ -30,11 +31,14 @@ function Company({ usedUser }) {
 
   function handleChange(whatPage) {
     if (whatPage.create) setJoinOrCrate({ create: whatPage.create })
-    else
+    else{
       setJoinOrCrate({
         create: whatPage.create,
         companyName: whatPage.companyName,
       })
+    }
+
+    console.log(whatPage, 'what Page')
   }
 
   useEffect(() => {
@@ -64,11 +68,12 @@ function Company({ usedUser }) {
                       }),
                     })
                 })
+                console.log('did found and go well')
+                setOpen(true);
               } else {
                 console.log('did not found')
+                setOpenError(true);
               }
-
-              console.log('success, do alert here')
             })
         } catch (error) {
           console.log(error, 'fb error')
@@ -102,12 +107,12 @@ function Company({ usedUser }) {
       </Grid>
       <Snackbar open={open} autoHideDuration={3000}>
         <Alert onClick={closeAlert} severity="success">
-          Förfrågan skickad!
+          Förfrågan skickad! Nu är det bara att vänta
         </Alert>
       </Snackbar>
       <Snackbar open={openError} autoHideDuration={3000}>
         <Alert onClick={closeErrorAlert} severity="error">
-          Något gick fel, kanske fel företagsnamn?
+          Hittade inte företaget, se till att allt står rätt!
         </Alert>
       </Snackbar>
     </Container>
