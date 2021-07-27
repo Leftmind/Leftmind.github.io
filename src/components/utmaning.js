@@ -24,6 +24,8 @@ import cooperation from '../assets/badge_cooperation.png'
 import firstHundredKronor from '../assets/badge_first_hundred_kronor.png'
 import { firebase } from '../config/fbConfig'
 import Banner from './assets/banner'
+import { Alert as MuiAlert } from '@material-ui/lab'
+import Snackbar from '@material-ui/core/Snackbar'
 
 const useStyles = makeStyles({
   root: {
@@ -121,6 +123,13 @@ const useStyles = makeStyles({
   paper: { borderRadius: 20 },
 })
 
+const happyAlert = [
+  "Snyggt kingen!",
+  "bra jobbat!",
+  "Ge dig själv en klapp på axeln",
+  "du förtjänar en applåd!",
+];
+
 const DialogBox = (props) => {
   const classes = useStyles()
   const {
@@ -215,6 +224,7 @@ const Utmaning = ({ usedUser }) => {
   const [company, setCompany] = useState({})
   const [dialogData, setDialogData] = useState({ open: false, dialogObj: null })
   const [cardData, setCardData] = useState([])
+  const [open, setOpen] = useState(false);
 
   const handleOpenDialog = (dialogId) => {
     setDialogData({ open: true, dialogId })
@@ -222,6 +232,13 @@ const Utmaning = ({ usedUser }) => {
 
   const handleCloseDialog = () => {
     setDialogData({ open: false, dialogId: null })
+  }
+
+  function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />
+  }
+  const closeAlert = () => {
+    setOpen(false)
   }
 
   useEffect(() => {
@@ -320,7 +337,9 @@ const Utmaning = ({ usedUser }) => {
           challenges: companyChallengesData,
         },
         { merge: true },
-      )
+      ).then( res => {
+        setOpen(true);
+      })
       .catch((error) => {
         console.log(error, 'error message')
       })
@@ -339,7 +358,7 @@ const Utmaning = ({ usedUser }) => {
           >
             <Grid item xs={12}>
               <Typography className={classes.utmaningDescriptionHeader}>
-                32w vi utmanar dig
+                Vi utmanar dig
               </Typography>
               <Typography className={classes.utmaningDescription}>
                 Vi vet att du utmanar dig själv bara genom att vara med i
@@ -384,6 +403,11 @@ const Utmaning = ({ usedUser }) => {
             ))}
           </Grid>
         </CardContent>
+        <Snackbar open={open} autoHideDuration={3000}>
+        <Alert onClick={closeAlert} severity="success">
+          {happyAlert[Math.floor(Math.random() * 3) + 1]}
+        </Alert>
+      </Snackbar>
       </Card>
       {dialogData.open && (
         <DialogBox

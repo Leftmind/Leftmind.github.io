@@ -127,6 +127,7 @@ export default function FormDialog({ order, company, expenseOrProfit, usedUser, 
                         timestamp: order.timestamp,
                     })
             }, { merge: true }).then(res => {
+                setUpdatePage(true);
                 setOpenAlertRemove(true);
             }).catch(error => {
                 console.log(error, 'error message')

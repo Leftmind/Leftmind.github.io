@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Box,
   Card,
@@ -18,9 +18,14 @@ function JoinCompany({ join, onChange }) {
     } else {
       setJoinOrNot({ create: false, companyName: state.companyName })
     }
-
-    onChange(joinOrNot)
   }
+
+
+  useEffect(async () => {
+    console.log('????', joinOrNot)
+    onChange(joinOrNot)
+
+  }, [joinOrNot])
 
   const [state, setState] = useState({
     companyName: '',

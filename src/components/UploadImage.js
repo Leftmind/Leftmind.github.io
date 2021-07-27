@@ -70,7 +70,7 @@ const UploadImage = (props) => {
         component="label"
         style={{ marginTop: 20 }}
       >
-        {`Ladda up ${company ? 'företagsbild' : 'profilbild'}`}
+        {`Ladda upp ${company ? 'företagsbild' : 'profilbild'}`}
         <input type="file" hidden onChange={onFileChange} />
       </Button>
       <Typography color="textSecondary" variant="body1"></Typography>

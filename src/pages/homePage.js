@@ -42,7 +42,6 @@ const icons = [
   <BusinessIcon />,
   <MonetizationOnIcon />,
   <AssignmentIcon />,
-  <AssessmentIcon />,
   <GroupIcon />,
   <BusinessIcon />,
   <ExitToAppIcon />,
@@ -52,7 +51,6 @@ const appPages = [
   'Mitt Företag',
   'Pengakollen',
   'Utmaning',
-  'Business bootcamp',
   'Alla Företag',
 ]
 

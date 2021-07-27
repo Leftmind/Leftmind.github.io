@@ -68,6 +68,8 @@ const AccountProfileDetails = ({ usedUser }) => {
   async function handleSubmit(event) {
     event.preventDefault()
 
+    console.log(userInfo, ' this is the userinfo')
+
     await firebase
       .firestore()
       .collection('users')
