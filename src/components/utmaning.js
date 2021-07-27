@@ -321,16 +321,14 @@ const Utmaning = ({ usedUser }) => {
         },
         { merge: true },
       )
-      .catch((error) => {
-        console.log(error, 'error message')
-      })
+      .catch((error) => console.log(error, 'error message'))
   }
 
   return (
     <Container>
       <Card className={classes.root}>
         <CardContent className={classes.cardContent}>
-        <Banner text="Utmaning" />
+          <Banner text="Utmaning" />
           <Grid
             container
             spacing={3}
