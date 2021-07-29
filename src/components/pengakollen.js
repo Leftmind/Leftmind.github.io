@@ -32,7 +32,6 @@ const Pengakollen = ({ usedUser }) => {
     setCompany(dataExists.data())
   }, [])
 
-
   if (!hasCompany)
     return (
       <Container>
@@ -46,7 +45,7 @@ const Pengakollen = ({ usedUser }) => {
       </Container>
     )
   return (
-    <Container style={{ marginBottom: 40 }}>
+    <Container>
       <Card>
         <Banner text="Pengakollen" />
         <CardHeader

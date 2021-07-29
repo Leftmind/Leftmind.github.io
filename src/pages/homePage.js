@@ -19,10 +19,10 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox'
 import BusinessIcon from '@material-ui/icons/Business'
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn'
 import AssignmentIcon from '@material-ui/icons/Assignment'
-import AssessmentIcon from '@material-ui/icons/Assessment'
 import { Redirect } from 'react-router-dom'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
+import GroupIcon from '@material-ui/icons/Group'
 import planetBackground from '../images/bakgrund.jpg'
 import Company from '../components/company'
 import Profile from '../components/profile'
@@ -33,7 +33,6 @@ import { useAuth } from '../config/authProvider'
 import FramtidsPortalenLogo from '../assets/Logga-framtidsportalen.png'
 import FramtidsPortalenBanner from '../assets/framtidsportalen-logga_alt.png'
 import AllCompanies from '../components/allCompanies'
-import GroupIcon from '@material-ui/icons/Group';
 
 const drawerWidth = 240
 
@@ -84,7 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
   avatar: {
     height: 110,

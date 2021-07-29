@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
-import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import TextField from '@material-ui/core/TextField'
-import Link from '@material-ui/core/Link'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
+import {
+  Button,
+  Box,
+  CssBaseline,
+  TextField,
+  Link,
+  Grid,
+  Typography,
+  Container,
+  CircularProgress,
+  Divider,
+  Snackbar,
+} from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Divider from '@material-ui/core/Divider'
 import { Redirect } from 'react-router-dom'
 import { Alert as MuiAlert } from '@material-ui/lab'
-import Snackbar from '@material-ui/core/Snackbar'
+import planetBackground from '../images/bakgrund.jpg'
 
 import { firebase } from '../config/fbConfig'
 
@@ -38,8 +42,17 @@ const styles = (theme) => ({
   },
 })
 
-function Signup(props) {
-  // const { signup } = useAuth()
+const CssTextField = withStyles({
+  root: {
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'white',
+      },
+    },
+  },
+})(TextField)
+
+function Signup() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -65,7 +78,6 @@ function Signup(props) {
     loading: false,
   })
 
-  const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const handleChange = (event) => {
@@ -79,8 +91,6 @@ function Signup(props) {
   async function handleSubmit(event) {
     event.preventDefault()
     const newUserData = state
-
-    console.log(newUserData, ' hallå?')
 
     firebase
       .auth()
@@ -106,171 +116,216 @@ function Signup(props) {
   if (loggedIn) return <Redirect to="/" />
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={styles.paper}>
-        <Typography align="center" component="h1" variant="h5">
-          Skapa konto
-        </Typography>
-        <form noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="Förnamn"
-                name="firstName"
-                autoComplete="firstName"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Efternamn"
-                name="lastName"
-                autoComplete="lastName"
-                onChange={handleChange}
-              />
-            </Grid>
+    <div
+      style={{
+        backgroundImage: `url(${planetBackground})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'repeat-y',
+        backgroundAttachment: 'fixed',
+        minHeight: '100vh',
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <Grid
+        container
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Box
+          style={{
+            padding: 10,
+            paddingTop: 30,
+            paddingBottom: 30,
+            backgroundColor: 'rgba(150, 203, 60, 0.6)',
+            borderRadius: 20,
+            margin: 30,
+          }}
+        >
+          <Container component="main" maxWidth="xs">
+            <CssBaseline />
+            <div className={styles.paper}>
+              <Typography
+                align="center"
+                variant="h4"
+                style={{ color: 'white', marginBottom: 20 }}
+              >
+                Skapa konto
+              </Typography>
+              <form noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="firstName"
+                      label="Förnamn"
+                      name="firstName"
+                      autoComplete="firstName"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="lastName"
+                      label="Efternamn"
+                      name="lastName"
+                      autoComplete="lastName"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="school"
-                label="Skola"
-                name="school"
-                autoComplete="school"
-                onChange={handleChange}
-              />
-            </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="school"
+                      label="Skola"
+                      name="school"
+                      autoComplete="school"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="phoneNumber"
-                label="Telefonnummer"
-                name="phoneNumber"
-                autoComplete="phoneNumber"
-                pattern="[7-9]{1}[0-9]{9}"
-                onChange={handleChange}
-              />
-            </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="phoneNumber"
+                      label="Telefonnummer"
+                      name="phoneNumber"
+                      autoComplete="phoneNumber"
+                      pattern="[7-9]{1}[0-9]{9}"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Mailadress"
-                name="email"
-                autoComplete="email"
-                onChange={handleChange}
-              />
-            </Grid>
+                  <Grid item xs={12}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Mailadress"
+                      name="email"
+                      autoComplete="email"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="municipality"
-                label="Kommun"
-                name="municipality"
-                autoComplete="municipality"
-                onChange={handleChange}
-              />
-            </Grid>
+                  <Grid item xs={12}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="municipality"
+                      label="Kommun"
+                      name="municipality"
+                      autoComplete="municipality"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="adress"
-                label="Gatuadress"
-                name="adress"
-                autoComplete="adress"
-                onChange={handleChange}
-              />
-            </Grid>
+                  <Grid item xs={12}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="adress"
+                      label="Gatuadress"
+                      name="adress"
+                      autoComplete="adress"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="zipcode"
-                label="Postnummer"
-                name="zipcode"
-                autoComplete="zipcode"
-                onChange={handleChange}
-              />
-            </Grid>
+                  <Grid item xs={12}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      id="zipcode"
+                      label="Postnummer"
+                      name="zipcode"
+                      autoComplete="zipcode"
+                      onChange={handleChange}
+                    />
+                  </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Lösenord"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="confirmPassword"
-                label="Repetera Lösenord"
-                type="password"
-                id="confirmPassword"
-                autoComplete="current-password"
-                onChange={handleChange}
-              />
-            </Grid>
-          </Grid>
-          <Divider />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-          >
-            Skapa Konto
-            {loading && <CircularProgress size={30} />}
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="login" variant="body2">
-                Har du redan ett konto? Logga in
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Snackbar open={open} autoHideDuration={3000}>
-          <Alert onClick={closeAlert} severity="error">
-            Nåt gick fel, stämmer allt? {' '}
-          </Alert>
-        </Snackbar>
-    </Container>
+                  <Grid item xs={12}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Lösenord"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <CssTextField
+                      variant="outlined"
+                      required
+                      fullWidth
+                      name="confirmPassword"
+                      label="Repetera Lösenord"
+                      type="password"
+                      id="confirmPassword"
+                      autoComplete="current-password"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                </Grid>
+                <Divider />
+                <Box
+                  style={{ padding: 20, paddingBottom: 10 }}
+                  display="flex"
+                  alignItems="center"
+                  flexDirection="column"
+                >
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                    style={{
+                      marginBottom: 20,
+                      paddingTop: 10,
+                      paddingBottom: 10,
+                    }}
+                  >
+                    Skapa Konto
+                    {loading && <CircularProgress size={30} />}
+                  </Button>
+
+                  <Link href="login" variant="body2">
+                    Har du redan ett konto? Logga in
+                  </Link>
+                </Box>
+              </form>
+            </div>
+            <Snackbar open={open} autoHideDuration={3000}>
+              <Alert onClick={closeAlert} severity="error">
+                Nåt gick fel, stämmer allt?{' '}
+              </Alert>
+            </Snackbar>
+          </Container>
+        </Box>
+      </Grid>
+    </div>
   )
 }
 

@@ -115,7 +115,7 @@ const AccountProfileDetails = ({ usedUser }) => {
             loading={loading}
             uploadedImage={userImage}
             onFileChange={onFileChange}
-            profil={true}
+            profil
           />
         </Grid>
         <CardHeader
@@ -224,7 +224,10 @@ const AccountProfileDetails = ({ usedUser }) => {
           alignItems="center"
           justify="center"
           xs={12}
-          style={{ padding: 20 }}
+          style={{
+            padding: 20,
+            paddingBottom: 20 + 12, // padding + bottom padding from the text boxes above so that the space above and below the button looks equal
+          }}
         >
           <Button color="primary" variant="contained" onClick={handleSubmit}>
             Spara

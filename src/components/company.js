@@ -11,12 +11,12 @@ import { useAuth } from '../config/authProvider'
 
 function Company({ usedUser }) {
   const hasCompany = 'companies' in usedUser
-  const [joinOrCreate, setJoinOrCrate] = useState("")
+  const [joinOrCreate, setJoinOrCrate] = useState('')
   const { user, loading, logout } = useAuth()
 
   const [open, setOpen] = useState(false)
   const [openError, setOpenError] = useState(false)
-  const [forceCheck, setForceCheck] = useState(false);
+  const [forceCheck, setForceCheck] = useState(false)
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />
@@ -31,7 +31,7 @@ function Company({ usedUser }) {
 
   function handleChange(whatPage) {
     if (whatPage.create) setJoinOrCrate({ create: whatPage.create })
-    else{
+    else {
       setJoinOrCrate({
         create: whatPage.create,
         companyName: whatPage.companyName,
@@ -69,10 +69,10 @@ function Company({ usedUser }) {
                     })
                 })
                 console.log('did found and go well')
-                setOpen(true);
+                setOpen(true)
               } else {
                 console.log('did not found')
-                setOpenError(true);
+                setOpenError(true)
               }
             })
         } catch (error) {
@@ -84,7 +84,7 @@ function Company({ usedUser }) {
 
   return (
     <Container>
-      <Grid container spacing={3} style={{ marginBottom: 40 }}>
+      <Grid container spacing={3}>
         {hasCompany ? (
           <>
             <Grid item xs={12}>
