@@ -17,6 +17,8 @@ import {
   IconButton,
   Grid,
   TextField,
+  TableFooter,
+  TablePagination,
 } from '@material-ui/core'
 import { Alert as MuiAlert } from '@material-ui/lab'
 import Snackbar from '@material-ui/core/Snackbar'
@@ -27,6 +29,12 @@ import { firebase } from '../../config/fbConfig'
 import FormDialog from './expensePopup'
 
 const Expenses = ({ usedUser, expense }) => {
+  const [page, setPage] = useState(0);
+  const [pageProfit, setPageProfit] = useState(0);
+
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+
   const expenseOrProfit = expense
 
   const { user, loading, logout } = useAuth()
@@ -112,6 +120,14 @@ const Expenses = ({ usedUser, expense }) => {
     setUpdatePage(true)
   }
 
+  const handleChangePage = (event, newPage) => {
+    console.log(newPage, page, 'hallå')
+    setPage(newPage);
+  };
+  const handleChangePageProfit = (event, newPage) => {
+    setPageProfit(newPage);
+  };
+
   useEffect(async () => {
     setUserInfo(usedUser)
 
@@ -190,7 +206,7 @@ const Expenses = ({ usedUser, expense }) => {
             <TableBody>
               {expenseOrProfit
                 ? company.expenses[0]
-                  ? company.expenses.map((order, i) => {
+                  ? company.expenses.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((order, i) => {
                       const date = new Date(order.timestamp.seconds)
                       return (
                         <TableRow hover key={order.transactionId}>
@@ -212,7 +228,7 @@ const Expenses = ({ usedUser, expense }) => {
                     })
                   : null
                 : company.profits[0]
-                ? company.profits.map((order, i) => (
+                ? company.profits.slice(pageProfit * rowsPerPage, pageProfit * rowsPerPage + rowsPerPage).map((order, i) => (
                     <TableRow hover key={order.transactionid}>
                       <TableCell>{order.transactionAmount} Sek</TableCell>
                       <TableCell>
@@ -231,6 +247,24 @@ const Expenses = ({ usedUser, expense }) => {
                   ))
                 : null}
             </TableBody>
+            <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={5}
+              colSpan={3}
+              count={expenseOrProfit ? company.expenses.length : company.profits.length}
+              rowsPerPage={rowsPerPage}
+              page={expenseOrProfit ? page : pageProfit}
+              SelectProps={{
+                inputProps: { 'aria-label': 'rows per page' },
+                native: true,
+              }}
+              onChangePage={expenseOrProfit ? handleChangePage : handleChangePageProfit}
+              // onRowsPerPageChange={handleChangeRowsPerPage}
+              // ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
           </Table>
         </Box>
       </PerfectScrollbar>
