@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.32f99243.chunk.css",
-    "main.js": "/static/js/main.76a349fb.chunk.js",
-    "main.js.map": "/static/js/main.76a349fb.chunk.js.map",
+    "main.js": "/static/js/main.04a478a9.chunk.js",
+    "main.js.map": "/static/js/main.04a478a9.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.9b89de3f.js",
     "runtime-main.js.map": "/static/js/runtime-main.9b89de3f.js.map",
-    "static/js/2.46ebbe4f.chunk.js": "/static/js/2.46ebbe4f.chunk.js",
-    "static/js/2.46ebbe4f.chunk.js.map": "/static/js/2.46ebbe4f.chunk.js.map",
+    "static/js/2.46e803df.chunk.js": "/static/js/2.46e803df.chunk.js",
+    "static/js/2.46e803df.chunk.js.map": "/static/js/2.46e803df.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.32f99243.chunk.css.map": "/static/css/main.32f99243.chunk.css.map",
-    "static/js/2.46ebbe4f.chunk.js.LICENSE.txt": "/static/js/2.46ebbe4f.chunk.js.LICENSE.txt",
+    "static/js/2.46e803df.chunk.js.LICENSE.txt": "/static/js/2.46e803df.chunk.js.LICENSE.txt",
     "static/media/Logga-framtidsportalen.61846cab.png": "/static/media/Logga-framtidsportalen.61846cab.png",
     "static/media/badge_2000_points.3c5a5888.png": "/static/media/badge_2000_points.3c5a5888.png",
     "static/media/badge_cooperation.370c388d.png": "/static/media/badge_cooperation.370c388d.png",
@@ -20,8 +20,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.9b89de3f.js",
-    "static/js/2.46ebbe4f.chunk.js",
+    "static/js/2.46e803df.chunk.js",
     "static/css/main.32f99243.chunk.css",
-    "static/js/main.76a349fb.chunk.js"
+    "static/js/main.04a478a9.chunk.js"
   ]
 }
