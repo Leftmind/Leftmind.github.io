@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/portalen.framtidensforetagare.com/static/css/main.32f99243.chunk.css",
-    "main.js": "/portalen.framtidensforetagare.com/static/js/main.04a478a9.chunk.js",
-    "main.js.map": "/portalen.framtidensforetagare.com/static/js/main.04a478a9.chunk.js.map",
+    "main.js": "/portalen.framtidensforetagare.com/static/js/main.fc16b114.chunk.js",
+    "main.js.map": "/portalen.framtidensforetagare.com/static/js/main.fc16b114.chunk.js.map",
     "runtime-main.js": "/portalen.framtidensforetagare.com/static/js/runtime-main.654270c4.js",
     "runtime-main.js.map": "/portalen.framtidensforetagare.com/static/js/runtime-main.654270c4.js.map",
-    "static/js/2.930ef0ca.chunk.js": "/portalen.framtidensforetagare.com/static/js/2.930ef0ca.chunk.js",
-    "static/js/2.930ef0ca.chunk.js.map": "/portalen.framtidensforetagare.com/static/js/2.930ef0ca.chunk.js.map",
+    "static/js/2.f1dbc7a4.chunk.js": "/portalen.framtidensforetagare.com/static/js/2.f1dbc7a4.chunk.js",
+    "static/js/2.f1dbc7a4.chunk.js.map": "/portalen.framtidensforetagare.com/static/js/2.f1dbc7a4.chunk.js.map",
     "index.html": "/portalen.framtidensforetagare.com/index.html",
     "static/css/main.32f99243.chunk.css.map": "/portalen.framtidensforetagare.com/static/css/main.32f99243.chunk.css.map",
-    "static/js/2.930ef0ca.chunk.js.LICENSE.txt": "/portalen.framtidensforetagare.com/static/js/2.930ef0ca.chunk.js.LICENSE.txt",
+    "static/js/2.f1dbc7a4.chunk.js.LICENSE.txt": "/portalen.framtidensforetagare.com/static/js/2.f1dbc7a4.chunk.js.LICENSE.txt",
     "static/media/Logga-framtidsportalen.61846cab.png": "/portalen.framtidensforetagare.com/static/media/Logga-framtidsportalen.61846cab.png",
     "static/media/badge_2000_points.3c5a5888.png": "/portalen.framtidensforetagare.com/static/media/badge_2000_points.3c5a5888.png",
     "static/media/badge_cooperation.370c388d.png": "/portalen.framtidensforetagare.com/static/media/badge_cooperation.370c388d.png",
@@ -20,8 +20,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.654270c4.js",
-    "static/js/2.930ef0ca.chunk.js",
+    "static/js/2.f1dbc7a4.chunk.js",
     "static/css/main.32f99243.chunk.css",
-    "static/js/main.04a478a9.chunk.js"
+    "static/js/main.fc16b114.chunk.js"
   ]
 }
